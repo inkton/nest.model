@@ -27,11 +27,30 @@ using System.Reflection;
 using System.Dynamic;
 using System.Collections;
 using System.Collections.ObjectModel;
+using Newtonsoft.Json;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Inkton.Nester.Cloud
 {
     public static class Object
     {
+        public static Task<StatusT> WaitAsync<StatusT>(Task<StatusT> task)
+        {
+            // Ensure that awaits were called with .ConfigureAwait(false)
+
+            var wait = new ManualResetEventSlim(false);
+
+            var continuation = task.ContinueWith(_ =>
+            {
+                wait.Set();
+                return _.Result;
+            });
+
+            wait.Wait();
+
+            return continuation;
+        }
 
         public static void Serialize(object value, System.IO.Stream s)
         {
@@ -80,6 +99,31 @@ namespace Inkton.Nester.Cloud
             }
         }
 
+        public static void FillBlanks<T, TU>(this T source, TU dest)
+        {
+            var sourceProps = source.GetType().GetRuntimeProperties()
+                   .Where(x => x.CanWrite).ToList();
+            var destProps = dest.GetType().GetRuntimeProperties()
+                   .Where(x => x.CanWrite).ToList();
+
+            foreach (var sourceProp in sourceProps)
+            {
+                var valueSrc = sourceProp.GetValue(source, null);
+
+                if (valueSrc != null)
+                {
+                    var p = destProps.FirstOrDefault(x => x.Name == sourceProp.Name);
+                    var valueDst = p.GetValue(dest, null);
+
+                    if (valueDst == null)
+                    {
+                        p.SetValue(dest, valueSrc, null);
+                    }
+                }
+            }
+        }
+
+
         public static void PourPropertiesTo<T, TU>(this T source, TU dest)
         {
             /* 
@@ -127,174 +171,179 @@ namespace Inkton.Nester.Cloud
                 }
             }
         }
-       
-        public static void CopyExpandoPropertiesTo<T>(ExpandoObject source, T dest)
+
+        public static void CopyExpandoPropertiesTo<T>(ExpandoObject source, T destination)
         {
             var sourceProps = source.GetType().GetRuntimeProperties()
                    .Where(x => x.CanWrite).ToList();
-            var destProps = dest.GetType().GetRuntimeProperties()
+            var destinationProps = destination.GetType().GetRuntimeProperties()
                    .Where(x => x.CanWrite).ToList();
 
-            foreach (var destProp in destProps)
+            foreach (var destinationProp in destinationProps)
             {
-                if (destProp.CustomAttributes.Any())
+                if (destinationProp.CustomAttributes.Any())
                 {
-                    var attribute = destProp.CustomAttributes.First();
-
-                    if (attribute.AttributeType == typeof(Newtonsoft.Json.JsonPropertyAttribute))
+                    foreach (var attribute in destinationProp.CustomAttributes)
                     {
-                        string propName = (string)destProp.CustomAttributes.ElementAt(0).ConstructorArguments.ElementAt(0).Value;
-
-                        var sourceDict = source as IDictionary<string, object>;
-                        bool ignore = false;
-
-                        foreach (var arg in attribute.NamedArguments)  
+                        if (attribute.AttributeType == typeof(JsonPropertyAttribute))
                         {
-                            if (arg.MemberName == "NullValueHandling")
+                            string propName = (string)destinationProp.CustomAttributes.ElementAt(0).ConstructorArguments.ElementAt(0).Value;
+
+                            var sourceDict = source as IDictionary<string, object>;
+                            object value = sourceDict[propName];
+                            bool ignore = false;
+
+                            foreach (var arg in attribute.NamedArguments)
                             {
-                                if (!sourceDict.ContainsKey(propName))
+                                if (arg.MemberName == "NullValueHandling")
                                 {
-                                    ignore = true;
-                                }
-                                break;
-                            }
-                        }
-
-                        if (ignore)
-                        {
-                            continue;
-                        }
-
-                        var value = sourceDict[propName];
-
-                        object setObj = destProp.GetValue(dest);
-
-                        if (setObj == null)
-                        {
-                            // process reference types
-
-                            if (destProp.PropertyType == typeof(string))
-                            {
-                                destProp.SetValue(dest, value);
-                                continue;
-                            }
-                            else if ((destProp.PropertyType == typeof(string[])))
-                            {
-                                IList objList = value as IList;
-                                string [] array = new string[objList.Count];
-
-                                int index = 0;
-                                foreach (object item in (value as IList))
-                                {
-                                    array[index] = item as string;
-                                    ++index;
-                                }
-
-                                destProp.SetValue(dest, array, null);
-                                continue;
-                            }
-                            else if ((destProp.PropertyType == typeof(ObservableCollection<ExpandoObject>)))
-                            {
-                                IEnumerable<object> objEnum = value as IEnumerable<object>;
-
-                                if (objEnum.Count() == 0)
-                                {
-                                    continue;
-                                }
-
-                                IEnumerable<object> objSubEnum = objEnum.FirstOrDefault() as IEnumerable<object>;
-
-                                if (objSubEnum.Count() == 0)
-                                {
-                                    continue;
-                                }
-
-                                var data = new ObservableCollection<ExpandoObject>();
-                                int index = 0, subIndex = 0;
-
-                                foreach (IEnumerable<object> item in objEnum)
-                                {
-                                    var subObject = new ExpandoObject() as IDictionary<string, object>;
-
-                                    foreach (object subItem in item)
+                                    if (!sourceDict.ContainsKey(propName))
                                     {
-                                        subObject.Add("Value" + subIndex.ToString(), subItem);
-                                        ++subIndex;
+                                        ignore = true;
                                     }
-
-                                    data.Add(subObject as ExpandoObject);
-
-                                    ++index;
-                                    subIndex = 0;
+                                    break;
                                 }
-
-                                destProp.SetValue(dest, data, null);
-                                continue;
                             }
-                            else if ((destProp.PropertyType == typeof(object[,])))
+
+                            if (ignore)
                             {
-                                IEnumerable<object> objEnum = value as IEnumerable<object>;
-
-                                if (objEnum.Count() == 0)
-                                {
-                                    continue;
-                                }
-
-                                IEnumerable<object> objSubEnum = objEnum.FirstOrDefault() as IEnumerable<object>;
-
-                                if (objSubEnum.Count() == 0)
-                                {
-                                    continue;
-                                }
-
-                                object[,] array = new object[objEnum.Count(), objSubEnum.Count()];
-                                int index = 0, subIndex = 0;
-
-                                foreach (IEnumerable<object> item in objEnum)
-                                {
-                                    foreach (object subItem in item)
-                                    {
-                                        array[index, subIndex] = subItem;
-                                        ++subIndex;
-                                    }
-                                    ++index;
-                                    subIndex = 0;
-                                }
-
-                                destProp.SetValue(dest, array, null);
                                 continue;
                             }
 
-                            setObj = Activator.CreateInstance(
-                                destProp.PropertyType);
-                        }
-
-                        if (setObj is Cloud.ManagedEntity)
-                        {
-                            CopyExpandoPropertiesTo(value as ExpandoObject, setObj);
-                            destProp.SetValue(dest, setObj);
-                        }
-                        else if (destProp.PropertyType == typeof(decimal))
-                        {
-                            destProp.SetValue(dest, new Decimal((long)value));
-                        }
-                        else if (destProp.PropertyType == typeof(bool))
-                        {
-                            if (value is Int64)
-                            {
-                                destProp.SetValue(dest, ((Int64)value) != 0);
-                            }
-                            else if (value is string)
-                            {
-                                destProp.SetValue(dest, ((string)value) != "False");
-                            }
-                        }
-                        else
-                        {
-                            destProp.SetValue(dest, value);
+                            SetValue(destination, destinationProp, value);
                         }
                     }
                 }
+            }
+        }
+
+        private static void SetValue<T>(T destination, PropertyInfo destinationProp, object value)
+        {
+            object setObj = destinationProp.GetValue(destination);
+
+            if (setObj == null)
+            {
+                bool objSet = true;
+
+                // process reference types
+                if (destinationProp.PropertyType == typeof(string))
+                {
+                    destinationProp.SetValue(destination, value);
+                }
+                else if ((destinationProp.PropertyType == typeof(string[])))
+                {
+                    IList objList = value as IList;
+                    string[] array = new string[objList.Count];
+
+                    int index = 0;
+                    foreach (object item in (value as IList))
+                    {
+                        array[index] = item as string;
+                        ++index;
+                    }
+
+                    destinationProp.SetValue(destination, array, null);
+                }
+                else if ((destinationProp.PropertyType == typeof(ObservableCollection<ExpandoObject>)))
+                {
+                    IEnumerable<object> objEnum = value as IEnumerable<object>;
+
+                    if (objEnum.Any())
+                    {
+                        IEnumerable<object> objSubEnum = objEnum.FirstOrDefault() as IEnumerable<object>;
+
+                        if (objSubEnum.Any())
+                        {
+                            var data = new ObservableCollection<ExpandoObject>();
+                            int index = 0, subIndex = 0;
+
+                            foreach (IEnumerable<object> item in objEnum)
+                            {
+                                var subObject = new ExpandoObject() as IDictionary<string, object>;
+
+                                foreach (object subItem in item)
+                                {
+                                    subObject.Add("Value" + subIndex.ToString(), subItem);
+                                    ++subIndex;
+                                }
+
+                                data.Add(subObject as ExpandoObject);
+
+                                ++index;
+                                subIndex = 0;
+                            }
+
+                            destinationProp.SetValue(destination, data, null);
+                        }
+                    }
+                }
+                else if ((destinationProp.PropertyType == typeof(object[,])))
+                {
+                    IEnumerable<object> objEnum = value as IEnumerable<object>;
+
+                    if (objEnum.Any())
+                    {
+                        IEnumerable<object> objSubEnum = objEnum.FirstOrDefault() as IEnumerable<object>;
+
+                        if (objSubEnum.Any())
+                        {
+                            object[,] array = new object[objEnum.Count(), objSubEnum.Count()];
+                            int index = 0, subIndex = 0;
+
+                            foreach (IEnumerable<object> item in objEnum)
+                            {
+                                foreach (object subItem in item)
+                                {
+                                    array[index, subIndex] = subItem;
+                                    ++subIndex;
+                                }
+                                ++index;
+                                subIndex = 0;
+                            }
+
+                            destinationProp.SetValue(destination, array, null);
+                        }
+                    }
+                }
+                else
+                {
+                    objSet = false;
+                }
+
+                if (objSet)
+                {
+                    return;
+                }
+                else
+                {
+                    setObj = Activator.CreateInstance(
+                        destinationProp.PropertyType);
+                }
+            }
+
+            if (setObj is Cloud.ManagedEntity)
+            {
+                CopyExpandoPropertiesTo(value as ExpandoObject, setObj);
+                destinationProp.SetValue(destination, setObj);
+            }
+            else if (destinationProp.PropertyType == typeof(decimal))
+            {
+                destinationProp.SetValue(destination, new Decimal((long)value));
+            }
+            else if (destinationProp.PropertyType == typeof(bool))
+            {
+                if (value is Int64)
+                {
+                    destinationProp.SetValue(destination, ((Int64)value) != 0);
+                }
+                else if (value is string)
+                {
+                    destinationProp.SetValue(destination, ((string)value) != "False");
+                }
+            }
+            else
+            {
+                destinationProp.SetValue(destination, value);
             }
         }
     }

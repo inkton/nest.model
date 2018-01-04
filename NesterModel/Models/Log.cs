@@ -54,7 +54,7 @@ namespace Inkton.Nester.Models
                 long epocTime = long.Parse(_id);
                 if (_epochTimeFromMicroseconds)
                 {
-                    return _epoch.AddSeconds(epocTime / 1000);
+                    return _epoch.AddSeconds(epocTime / 1000000);
                 }
                 else
                 {

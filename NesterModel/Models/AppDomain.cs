@@ -159,7 +159,7 @@ namespace Inkton.Nester.Models
             }
         }
 
-        public string Ip
+        public string IPAddress
         {
             get { return _ip; }
             set

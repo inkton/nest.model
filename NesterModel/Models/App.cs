@@ -33,9 +33,10 @@ namespace Inkton.Nester.Models
         private string _name;
         private string _type;
         private string _status;
+        private string _ipAddress;
         private Int64 _userId;
         private Int64? _treeId;
-        private Int64? _primaryDomainTag;
+        private Int64? _primaryDomainId;
         private string _unifiedPassword, _networkPassword, _servicesPassword;
         private Int64? _serviceTierId;
 
@@ -147,6 +148,16 @@ namespace Inkton.Nester.Models
             }
         }
 
+        [JsonProperty("ip_address")]
+        public string IPAddress
+        {
+            get { return _ipAddress; }
+            set
+            {
+                SetProperty(ref _ipAddress, value);
+            }
+        }
+
         public bool IsDeploymentValid
         {
             get
@@ -227,8 +238,8 @@ namespace Inkton.Nester.Models
         [JsonProperty("primary_domain_id")]
         public Int64? PrimaryDomainId
         {
-            get { return _primaryDomainTag; }
-            set { SetProperty(ref _primaryDomainTag, value); }
+            get { return _primaryDomainId; }
+            set { SetProperty(ref _primaryDomainId, value); }
         }
 
         [JsonProperty("network_password")]

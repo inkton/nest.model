@@ -32,6 +32,7 @@ namespace Inkton.Nester.Models
         private Int64 _forestId;
         private Int64 _frameworkVersionId;
         private string _status = "complete";
+        private bool _makeBackup = true;
 
         private App _application = null;
 
@@ -138,6 +139,16 @@ namespace Inkton.Nester.Models
             set
             {
                 SetProperty(ref _status, value);
+            }
+        }
+
+        [JsonProperty("make_backup")]
+        public bool MakeBackup
+        {
+            get { return _makeBackup; }
+            set
+            {
+                SetProperty(ref _makeBackup, value);
             }
         }
 

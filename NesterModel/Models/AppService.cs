@@ -35,7 +35,10 @@ namespace Inkton.Nester.Models
         private string _rules;
         private string _featuresAll;
         private Int64? _port;
+
         private App _application = null;
+        private Deployment _deployment = null;
+
         private ObservableCollection<AppServiceTier> _tiers;
 
         public AppService() 
@@ -49,6 +52,12 @@ namespace Inkton.Nester.Models
             set { SetProperty(ref _application, value); }
         }
 
+        public Deployment Deployment
+        {
+            get { return _deployment; }
+            set { SetProperty(ref _deployment, value); }
+        }
+
         public override string Key
         {
             get { return _tag; }
@@ -58,7 +67,11 @@ namespace Inkton.Nester.Models
         {
             get
             {
-                if (_application != null)
+                if (_deployment != null)
+                {
+                    return _deployment.CollectionKey + base.Collection;
+                }
+                else if (_application != null)
                 {
                     return _application.CollectionKey + base.Collection;
                 }
@@ -73,7 +86,11 @@ namespace Inkton.Nester.Models
         {
             get
             {
-                if (_application != null)
+                if (_deployment != null)
+                {
+                    return _deployment.CollectionKey + base.CollectionKey;
+                }
+                else if (_application != null)
                 {
                     return _application.CollectionKey + base.CollectionKey;
                 }

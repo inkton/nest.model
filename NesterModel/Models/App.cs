@@ -39,6 +39,7 @@ namespace Inkton.Nester.Models
         private Int64? _primaryDomainId;
         private string _unifiedPassword, _networkPassword, _servicesPassword;
         private Int64? _serviceTierId;
+        private int _backupHour = 0;
 
         private User _owner = null;
         private Deployment _deployment = null;
@@ -158,6 +159,20 @@ namespace Inkton.Nester.Models
             }
         }
 
+        [JsonProperty("backup_hour")]
+        public int BackupHour
+        {
+            get { return _backupHour; }
+            set
+            {
+                SetProperty(ref _backupHour, value);
+            }
+        }
+
+        /// <summary>
+        /// A Deployment exists - the deployment
+        /// status can be anything
+        /// </summary>
         public bool IsDeploymentValid
         {
             get
@@ -194,6 +209,10 @@ namespace Inkton.Nester.Models
             }
         }
 
+        /// <summary>
+        /// A Deployment exists and not in progress 
+        /// of being removed or created
+        /// </summary>
         public bool IsDeployed
         {
             get
@@ -210,6 +229,9 @@ namespace Inkton.Nester.Models
             }
         }
 
+        /// <summary>
+        /// A Deployment exists and it is beging upated
+        /// </summary>
         public bool IsBusy
         {
             get
@@ -222,6 +244,9 @@ namespace Inkton.Nester.Models
             }
         }
 
+        /// <summary>
+        /// The app is active and online
+        /// </summary>
         public bool IsActive
         {
             get

@@ -19,38 +19,35 @@
     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
 using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace Inkton.Nester.Models
 {
-    public class Deployment : Cloud.ManagedEntity
+    public class AppBackup : Cloud.ManagedEntity
     {
-        private Int64 _id = -1;  // _id == -1 is undeployed
-        private Int64 _appId;
-        private Int64 _forestId;
-        private Int64 _frameworkVersionId;
-        private string _status = "complete";
-        private bool _makeBackup = true;
+        private Int64 _id;
+        private string _tag;
+        private string _timeCreated;
+        private string _description;
+        private Int64? _deploymentSize;
+        private string _status;
 
-        private App _application = null;
+        private Deployment _deployment = null;
 
-        public Deployment()
-            : base("deployment")
+        public AppBackup()
+            : base("app_backup")
         {
         }
 
-        public App App
+        public Deployment Deployment
         {
-            get { return _application; }
+            get { return _deployment; }
             set
             {
-                _application = value;
-                if (value != null)
-                {
-                    this.AppId = value.Id;
-                }
+                _deployment = value;
             }
         }
 
@@ -63,9 +60,9 @@ namespace Inkton.Nester.Models
         {
             get
             {
-                if (_application != null)
+                if (_deployment != null)
                 {
-                    return _application.CollectionKey + base.Collection;
+                    return _deployment.CollectionKey + base.Collection;
                 }
                 else
                 {
@@ -78,22 +75,14 @@ namespace Inkton.Nester.Models
         {
             get
             {
-                if (_application != null)
+                if (_deployment != null)
                 {
-                    return _application.CollectionKey + base.CollectionKey;
+                    return _deployment.CollectionKey + base.CollectionKey;
                 }
                 else
                 {
                     return base.CollectionKey;
                 }
-            }
-        }
-
-        public bool IsBusy
-        {
-            get
-            {
-                return (_status == "updating");
             }
         }
 
@@ -104,71 +93,52 @@ namespace Inkton.Nester.Models
             set { _id = value; }
         }
 
-        [JsonProperty("app_id")]
-        public Int64 AppId
+        [JsonProperty("tag")]
+        public string Tag
         {
-            get { return _appId; }
-            set { SetProperty(ref _appId, value); }
-        }
-
-        [JsonProperty("forest_id")]
-        public Int64 ForestId
-        {
-            get { return _forestId; }
+            get { return _tag; }
             set
             {
-                SetProperty(ref _forestId, value);
+                SetProperty(ref _tag, value);
             }
         }
 
-        [JsonProperty("software_framework_version_id")]
-        public Int64 FrameworkVersionId
+        [JsonProperty("time_created")]
+        public string TimeCreated
         {
-            get { return _frameworkVersionId; }
+            get { return _timeCreated; }
             set
             {
-                SetProperty(ref _frameworkVersionId, value);
+                SetProperty(ref _timeCreated, value);
             }
         }
 
+        [JsonProperty("description")]
+        public string Description
+        {
+            get { return _description; }
+            set
+            {
+                SetProperty(ref _description, value);
+            }
+        }
 
-        [JsonProperty("status")]
+        [JsonProperty("deployment_size")]
+        public Int64? DeploymentSize
+        {
+            get { return _deploymentSize; }
+            set
+            {
+                SetProperty(ref _deploymentSize, value);
+            }
+        }
+
         public string Status
         {
             get { return _status; }
             set
             {
                 SetProperty(ref _status, value);
-            }
-        }
-
-        [JsonProperty("make_backup")]
-        public bool MakeBackup
-        {
-            get { return _makeBackup; }
-            set
-            {
-                SetProperty(ref _makeBackup, value);
-            }
-        }
-
-        public string Icon
-        {
-            get
-            {
-                if (_status == "updating")
-                {
-                    return "deploymentbusy.png";
-                }
-                else if (_status == "complete")
-                {
-                    return "deploymentactive.png";
-                }
-                else
-                {
-                    // deployment failed icon needed
-                    return "deploymentactive.png";
-                }
             }
         }
     }

@@ -33,6 +33,7 @@ namespace Inkton.Nester.Models
         private string _firstName;
         private string _lastName;
         private bool _active;
+        private double _creditBalance;
 
         public User() 
             : base("user")
@@ -91,6 +92,13 @@ namespace Inkton.Nester.Models
         {
             get { return _lastName; }
             set { SetProperty(ref _lastName, value); }
+        }
+
+        [JsonProperty("credits_balance")]
+        public double CreditsBalance
+        {
+            get { return _creditBalance; }
+            set { SetProperty(ref _creditBalance, value); }
         }
     }
 }

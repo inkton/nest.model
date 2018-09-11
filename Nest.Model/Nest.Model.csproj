@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Title>Inkton NestModel</Title>
     <PackageId>Inkton.NestModel</PackageId>
-    <PackageVersion>1.0.7</PackageVersion>
+    <PackageVersion>1.0.5</PackageVersion>
     <PackageTags>paas,docker,nest.yt</PackageTags>
     <Authors>nest.yt</Authors>
     <Description>The Data Model for Nest.yt</Description>
@@ -18,9 +18,9 @@
     <RepositoryUrl>https://github.com/inkton/nest.model</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
     <Platforms>AnyCPU</Platforms>
-    <Version>1.0.7</Version>
-    <AssemblyVersion>1.0.7.0</AssemblyVersion>
-    <FileVersion>1.0.7.0</FileVersion>
+    <Version>1.0.5</Version>
+    <AssemblyVersion>1.0.5.0</AssemblyVersion>
+    <FileVersion>1.0.5.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

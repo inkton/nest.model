@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Inkton NestModel</Title>
+    <PackageId>Inkton.NestModel</PackageId>
+    <PackageVersion>1.0.5</PackageVersion>
+    <PackageTags>paas,docker,nest.yt</PackageTags>
+    <Authors>nest.yt</Authors>
+    <Description>The Data Model for Nest.yt</Description>
+    <Copyright>Copyright (c) 2018 Inkton</Copyright>
+    <Company>Inkton</Company>
+    <Product>Nest Model</Product>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Inkton</RootNamespace>
+    <PackageLicenseUrl>https://github.com/inkton/Nest.model/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/inkton</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/inkton/nest.model</RepositoryUrl>
+    <RepositoryType>github</RepositoryType>
+    <Platforms>AnyCPU</Platforms>
+    <Version>1.0.5</Version>
+    <AssemblyVersion>1.0.5.0</AssemblyVersion>
+    <FileVersion>1.0.5.0</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Humanizer.Core" Version="2.4.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+</Project>

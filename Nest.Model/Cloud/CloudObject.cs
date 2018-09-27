@@ -164,26 +164,20 @@ namespace Inkton.Nest.Cloud
 
         public void CopyTo(CloudObject otherObject)
         {
-            var sourceProps = otherObject.GetType().GetRuntimeProperties()
+            var sourceProps = GetType().GetRuntimeProperties()
                              .Where(x => x.CanWrite).ToList();
             var destProps = otherObject.GetType().GetRuntimeProperties()
                    .Where(x => x.CanWrite).ToList();
 
             foreach (var sourceProp in sourceProps)
             {
-                var value = sourceProp.GetValue(this, null);
-                var p = destProps.FirstOrDefault(x => x.Name == sourceProp.Name);
+                var destProp = destProps.FirstOrDefault(
+                        prop => (prop.Name == sourceProp.Name && 
+                            prop.GetType() == sourceProp.GetType()));
 
-                if (p != null)
+                if (destProp != null)
                 {
-                    if (value == null)
-                    {
-                        p.SetValue(otherObject, null, null);
-                    }
-                    else
-                    {
-                        p.SetValue(otherObject, value, null);
-                    }
+                    destProp.SetValue(otherObject, sourceProp.GetValue(this, null), null);
                 }
             }
         }

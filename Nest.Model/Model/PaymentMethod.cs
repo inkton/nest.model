@@ -120,5 +120,13 @@ namespace Inkton.Nest.Model
             get { return _proof; }
             set { SetProperty(ref _proof, value); }
         }
+
+        public bool IsActive
+        {
+            get
+            {
+                return (_proof == null || _proof.Last4 == 0);
+            }
+        }
     }
 }

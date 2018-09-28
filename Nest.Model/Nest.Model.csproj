@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Title>Inkton NestModel</Title>
     <PackageId>Inkton.NestModel</PackageId>
-    <PackageVersion>1.0.7</PackageVersion>
+    <PackageVersion>1.0.8</PackageVersion>
     <PackageTags>paas,docker,nest.yt</PackageTags>
     <Authors>nest.yt</Authors>
     <Description>The Data Model for Nest.yt</Description>
@@ -23,6 +23,7 @@
   <ItemGroup>
     <PackageReference Include="Humanizer.Core" Version="2.4.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>

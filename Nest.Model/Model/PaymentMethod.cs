@@ -125,7 +125,7 @@ namespace Inkton.Nest.Model
         {
             get
             {
-                return (_proof == null || _proof.Last4 == 0);
+                return (_proof != null && _proof.Last4 > 0);
             }
         }
     }

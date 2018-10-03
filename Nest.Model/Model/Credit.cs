@@ -31,7 +31,7 @@ namespace Inkton.Nest.Model
         private Int64 _id;
         private string _code;
         private string _type;
-        private string _amount;
+        private string _value;
         private string _expiry;
 
         public Credit()
@@ -64,11 +64,11 @@ namespace Inkton.Nest.Model
             set { SetProperty(ref _type, value); }
         }
 
-        [JsonProperty("amount")]
-        public string Amount
+        [JsonProperty("value")]
+        public string Value
         {
-            get { return _amount; }
-            set { SetProperty(ref _amount, value); }
+            get { return _value; }
+            set { SetProperty(ref _value, value); }
         }
 
         [JsonProperty("expiry")]

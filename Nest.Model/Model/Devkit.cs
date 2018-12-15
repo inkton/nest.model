@@ -21,19 +21,37 @@
 */
 using System;
 using Inkton.Nest.Cloud;
+using Newtonsoft.Json;
 
 namespace Inkton.Nest.Model
 {
     [CloudName("devkit")]
     public class Devkit : CloudObject
     {
+        private Int64 _id;
+        private string _script;
+
         public Devkit() 
         {
         }
 
+        [JsonProperty("id")]
+        public Int64 Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+
+        [JsonProperty("script")]
+        public string Script
+        {
+            get { return _script; }
+            set { _script = value; }
+        }
+
         public override string CloudKey
         {
-            get { return "0"; }
+            get { return _id.ToString(); }
         }
     }
 }

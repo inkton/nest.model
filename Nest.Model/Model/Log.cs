@@ -231,46 +231,38 @@ namespace Inkton.Nest.Model
     }
 
     [CloudName("log")]
-    public class DiskSpaceLog : Log
+    public class SystemIOLog : Log
     {
-        private double _avail;
-        private double _used;
-        private double _reservedForRoot;
+        private double _in;
+        private double _out;
 
-        public DiskSpaceLog()
+        public SystemIOLog()
         {
             _epochTimeFromMicroseconds = false;
         }
 
-        [JsonProperty("avail")]
-        public double Available
+        [JsonProperty("in")]
+        public double In
         {
-            get { return _avail; }
-            set { SetProperty(ref _avail, value); }
+            get { return _in; }
+            set { SetProperty(ref _in, value); }
         }
 
-        [JsonProperty("used")]
-        public double Used
+        [JsonProperty("out")]
+        public double Out
         {
-            get { return _used; }
-            set { SetProperty(ref _used, value); }
-        }
-
-        [JsonProperty("reserved_for_root")]
-        public double ReservedForRoot
-        {
-            get { return _reservedForRoot; }
-            set { SetProperty(ref _reservedForRoot, value); }
+            get { return _out; }
+            set { SetProperty(ref _out, value); }
         }
     }
 
     [CloudName("log")]
-    public class SystemIPV4Log : Log
+    public class SystemIPLog : Log
     {
         private double _received;
         private double _sent;
 
-        public SystemIPV4Log()
+        public SystemIPLog()
         {
             _epochTimeFromMicroseconds = false;
         }

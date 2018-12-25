@@ -26,7 +26,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("charts_basket")]
+    [Cloudname("charts_basket")]
     public class ChartsBasket : CloudObject
     {
         private string _id;

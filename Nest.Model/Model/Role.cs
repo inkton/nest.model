@@ -28,19 +28,14 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [Cloudname("user")]
-    public class User : IdentityUser<int>,
+    [Cloudname("role")]
+    public class Role : IdentityRole<int>,
         ICloudObject, INotifyPropertyChanged
     {
-        private string _territoryISOCode;
-        private string _firstName;
-        private string _lastName;
-        private bool _active;
-        private double _creditBalance;
-
+        private string _tag;
         private CloudObjectHelper _helper;
 
-        public User()
+        public Role()
         {
             _helper = new CloudObjectHelper(this);
         }
@@ -65,7 +60,7 @@ namespace Inkton.Nest.Model
         {
             get { return _helper.CollectionPath; }
         }
-
+         
         [NotMapped]
         [JsonIgnore]
         virtual public string CollectionKey
@@ -112,47 +107,11 @@ namespace Inkton.Nest.Model
             _helper.CopyTo(otherObject);
         }
 
-        [JsonProperty("is_activated")]
-        public bool IsActive
+        [JsonProperty("tag")]
+        public string Tag
         {
-            get { return _active; }
-            set { SetProperty(ref _active, value); }
-        }
-
-        [NotMapped]
-        [JsonProperty("nickname")]
-        public string Nickname
-        {
-            get { return UserName; }
-            set { UserName = value; }
-        }
-
-        [JsonProperty("territory_iso_code")]
-        public string TerritoryISOCode
-        {
-            get { return _territoryISOCode; }
-            set { SetProperty(ref _territoryISOCode, value); }
-        }
-
-        [JsonProperty("first_name")]
-        public string FirstName
-        {
-            get { return _firstName; }
-            set { SetProperty(ref _firstName, value); }
-        }
-
-        [JsonProperty("surname")]
-        public string LastName
-        {
-            get { return _lastName; }
-            set { SetProperty(ref _lastName, value); }
-        }
-
-        [JsonProperty("credits_balance")]
-        public double CreditsBalance
-        {
-            get { return _creditBalance; }
-            set { SetProperty(ref _creditBalance, value); }
+            get { return _tag; }
+            set { SetProperty(ref _tag, value); }
         }
     }
 }

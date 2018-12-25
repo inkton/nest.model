@@ -25,7 +25,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("deployment")]
+    [Cloudname("deployment")]
     public class Deployment : CloudObject
     {
         private Int64 _id = -1;  // _id == -1 is undeployed

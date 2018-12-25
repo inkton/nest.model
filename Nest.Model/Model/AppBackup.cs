@@ -26,7 +26,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("app_backup")]
+    [Cloudname("app_backup")]
 
     public class AppBackup : CloudObject
     {

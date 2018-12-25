@@ -26,7 +26,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("invitation")]
+    [Cloudname("invitation")]
     public class Invitation : Contact
     {
         private string _appName;

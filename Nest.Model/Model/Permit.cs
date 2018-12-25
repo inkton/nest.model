@@ -25,15 +25,15 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("permit")]
+    [Cloudname("permit")]
     public class Permit : Cloud.CloudObject
     {
         private string _token = "<-token->";
         private string _password = null;
         private string _securityCode = null;
-        private User _user;
+        private User _user = new User();
 
-        public Permit() 
+        public Permit()
         {
         }
 
@@ -49,12 +49,14 @@ namespace Inkton.Nest.Model
             set { _token = value; }
         }
 
+        [JsonProperty("password")]
         public string Password
         {
             get { return _password; }
             set { _password = value; }
         }
 
+        [JsonProperty("security_code")]
         public string SecurityCode
         {
             get { return _securityCode; }
@@ -66,6 +68,12 @@ namespace Inkton.Nest.Model
         {
             get { return _user; }
             set { SetProperty(ref _user, value); }
+        }
+
+        public void Invalid()
+        {
+            _token = null;
+            _password = null;
         }
     }
 }

@@ -77,7 +77,7 @@ namespace Inkton.Nest.Model
         }
     }
 
-    [CloudName("log")]
+    [Cloudname("log")]
     public class NestLog : Log
     {
         private string _eventId;
@@ -146,7 +146,7 @@ namespace Inkton.Nest.Model
         }
     }
 
-    [CloudName("log")]
+    [Cloudname("log")]
     public class SystemCPULog : Log
     {
         private double _guestNice;
@@ -230,7 +230,7 @@ namespace Inkton.Nest.Model
         }
     }
 
-    [CloudName("log")]
+    [Cloudname("log")]
     public class SystemIOLog : Log
     {
         private double _in;
@@ -256,7 +256,7 @@ namespace Inkton.Nest.Model
         }
     }
 
-    [CloudName("log")]
+    [Cloudname("log")]
     public class SystemIPLog : Log
     {
         private double _received;
@@ -282,7 +282,7 @@ namespace Inkton.Nest.Model
         }
     }
 
-    [CloudName("log")]
+    [Cloudname("log")]
     public class SystemRAMLog : Log
     {
         private double _free;

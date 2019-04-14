@@ -25,7 +25,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("app_domain_certificate")]
+    [Cloudname("app_domain_certificate")]
     public class AppDomainCertificate : CloudObject
     {
         private Int64 _id;

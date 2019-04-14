@@ -27,7 +27,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("app")]
+    [Cloudname("app")]
     public class App : CloudObject
     {
         private Int64 _id;

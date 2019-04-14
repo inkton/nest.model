@@ -25,19 +25,39 @@ using System.Runtime.CompilerServices;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Humanizer;
 
 namespace Inkton.Nest.Cloud
 {
+    public interface ICloudObject
+    {
+        [JsonIgnore]
+        string CloudKey { get; }
+
+        [JsonIgnore]
+        ICloudObject OwnedBy { get; set; }
+
+        [JsonIgnore]
+        string CollectionPath { get; }
+
+        [JsonIgnore]
+        string CollectionKey { get; }
+
+        string GetObjectName();
+
+        string GetCollectionName();
+
+        void CopyTo(ICloudObject otherObject);
+    }
+
     [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
-    public class CloudNameAttribute : Attribute
+    public class CloudnameAttribute : Attribute
     {
         private string _objectName;
         private string _collectionName;
 
-        public CloudNameAttribute(string objectName, string collectionName = null)
+        public CloudnameAttribute(string objectName, string collectionName = null)
         {
             _objectName = objectName;
 
@@ -62,27 +82,27 @@ namespace Inkton.Nest.Cloud
         }
     }
 
-    [NotMapped]
-    public abstract class CloudObject : INotifyPropertyChanged
+    public class CloudObjectHelper
     {
-        private CloudObject _ownedBy;
+        private ICloudObject _helpee;
+        private ICloudObject _ownedBy;
         public event PropertyChangedEventHandler PropertyChanged;
-        
-        public CloudObject()
+
+        public CloudObjectHelper(ICloudObject helpee)
         {
+            _helpee = helpee;
         }
 
-        [JsonIgnore]
-        public CloudObject OwnedBy
+        public ICloudObject OwnedBy
         {
             get { return _ownedBy; }
             set { _ownedBy = value; }
         }
 
-        [JsonIgnore]
-        virtual public string CollectionPath
+        public string CollectionPath
         {
-            get {
+            get
+            {
                 if (_ownedBy != null)
                 {
                     return _ownedBy.CollectionKey + GetCollectionName() + "/";
@@ -94,55 +114,48 @@ namespace Inkton.Nest.Cloud
             }
         }
 
-        [JsonIgnore]
-        virtual public string CollectionKey
+        public string CollectionKey
         {
-            get { return CollectionPath + CloudKey + "/"; }
+            get { return CollectionPath + _helpee.CloudKey + "/"; }
         }
 
-        [JsonIgnore]
-        public virtual string CloudKey
+        public CloudnameAttribute GetCloudname()
         {
-            get;
-        }
-
-        public CloudNameAttribute GetCloudName()
-        {
-            MemberInfo memberInfo = GetType();
-            return memberInfo.GetCustomAttributes(true).Where(
-                attr => attr.GetType() == typeof(CloudNameAttribute))
-                    .FirstOrDefault() as CloudNameAttribute;
+            MemberInfo memberInfo = _helpee.GetType();
+            return memberInfo.GetCustomAttributes(true)
+                .FirstOrDefault(attr => attr.GetType()
+                    == typeof(CloudnameAttribute)) as CloudnameAttribute;
         }
 
         public string GetObjectName()
         {
-            CloudNameAttribute cloudName = GetCloudName();
+            CloudnameAttribute cloudname = GetCloudname();
 
-            if (cloudName != null)
+            if (cloudname != null)
             {
-                return cloudName.ObjectName;
+                return cloudname.ObjectName;
             }
             else
             {
-                return GetType().Name;
+                return _helpee.GetType().Name;
             }
         }
 
         public string GetCollectionName()
         {
-            CloudNameAttribute cloudName = GetCloudName();
+            CloudnameAttribute cloudname = GetCloudname();
 
-            if (cloudName != null)
+            if (cloudname != null)
             {
-                return cloudName.CollectionName;
+                return cloudname.CollectionName;
             }
             else
             {
-                return GetType().Name.Pluralize();
+                return _helpee.GetType().Name.Pluralize();
             }
         }
 
-        protected virtual bool SetProperty<T>(ref T storage, T value,
+        public virtual bool SetProperty<T>(ref T storage, T value,
                                         [CallerMemberName] string propertyName = null)
         {
             if (Object.Equals(storage, value))
@@ -153,7 +166,7 @@ namespace Inkton.Nest.Cloud
             return true;
         }
 
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
@@ -162,9 +175,9 @@ namespace Inkton.Nest.Cloud
             }
         }
 
-        public void CopyTo(CloudObject otherObject)
+        public void CopyTo(ICloudObject otherObject)
         {
-            var sourceProps = GetType().GetRuntimeProperties()
+            var sourceProps = _helpee.GetType().GetRuntimeProperties()
                              .Where(x => x.CanWrite).ToList();
             var destProps = otherObject.GetType().GetRuntimeProperties()
                    .Where(x => x.CanWrite).ToList();
@@ -172,7 +185,7 @@ namespace Inkton.Nest.Cloud
             foreach (var sourceProp in sourceProps)
             {
                 var destProp = destProps.FirstOrDefault(
-                        prop => (prop.Name == sourceProp.Name && 
+                        prop => (prop.Name == sourceProp.Name &&
                             prop.GetType() == sourceProp.GetType()));
 
                 if (destProp != null)
@@ -180,6 +193,79 @@ namespace Inkton.Nest.Cloud
                     destProp.SetValue(otherObject, sourceProp.GetValue(this, null), null);
                 }
             }
+        }
+    }
+
+    [NotMapped]
+    public abstract class CloudObject : ICloudObject, INotifyPropertyChanged
+    {
+        private CloudObjectHelper _helper;
+
+        public CloudObject()
+        {
+            _helper = new CloudObjectHelper(this);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged
+        {
+            add => _helper.PropertyChanged += value;
+            remove => _helper.PropertyChanged -= value;
+        }
+
+        [JsonIgnore]
+        public ICloudObject OwnedBy
+        {
+            get => _helper.OwnedBy;
+            set => _helper.OwnedBy = value;
+        }
+
+        [JsonIgnore]
+        virtual public string CollectionPath
+        {
+            get => _helper.CollectionPath;
+        }
+
+        [JsonIgnore]
+        virtual public string CollectionKey
+        {
+            get => _helper.CollectionKey;
+        }
+
+        [JsonIgnore]
+        public virtual string CloudKey
+        {
+            get;
+        }
+
+        public CloudnameAttribute GetCloudname()
+        {
+            return _helper.GetCloudname();
+        }
+
+        public string GetObjectName()
+        {
+            return _helper.GetObjectName();
+        }
+
+        public string GetCollectionName()
+        {
+            return _helper.GetCollectionName();
+        }
+
+        protected virtual bool SetProperty<T>(ref T storage, T value,
+                                        [CallerMemberName] string propertyName = null)
+        {
+           return _helper.SetProperty(ref storage, value, propertyName);
+        }
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            _helper.OnPropertyChanged(propertyName);
+        }
+
+        public void CopyTo(ICloudObject otherObject)
+        {
+            _helper.CopyTo(otherObject);
         }
     }
 }

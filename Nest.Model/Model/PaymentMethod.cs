@@ -26,7 +26,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("token")]
+    [Cloudname("token")]
     public class ChargeCardToken : CloudObject
     {
         public ChargeCardToken()
@@ -68,7 +68,7 @@ namespace Inkton.Nest.Model
         }
     }
 
-    [CloudName("payment_method")]
+    [Cloudname("payment_method")]
     public class PaymentMethod : CloudObject
     {
         private Int64 _id;

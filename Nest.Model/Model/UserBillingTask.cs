@@ -25,7 +25,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("user_billing_task")]
+    [Cloudname("user_billing_task")]
     public class UserBillingTask : CloudObject
     {
         private Int64 _id;

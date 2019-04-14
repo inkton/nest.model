@@ -25,14 +25,14 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("software_framework")]
+    [Cloudname("software_framework")]
     public class SoftwareFramework : CloudObject
     {
         private Int64 _id;
         private string _tag;
         private string _name;
 
-        [CloudName("software_framework_version")]
+        [Cloudname("software_framework_version")]
         public class Version : CloudObject
         {
             private Int64 _id;

@@ -173,6 +173,9 @@ namespace Inkton.Nest.Cloud
 
         public void CopyTo(ICloudObject otherObject)
         {
+            if (_helpee.GetType() != otherObject.GetType())
+                return;
+
             var sourceProps = _helpee.GetType().GetRuntimeProperties()
                              .Where(x => x.CanWrite).ToList();
             var destProps = otherObject.GetType().GetRuntimeProperties()
@@ -186,7 +189,7 @@ namespace Inkton.Nest.Cloud
 
                 if (destProp != null)
                 {
-                    destProp.SetValue(otherObject, sourceProp.GetValue(this, null), null);
+                    destProp.SetValue(otherObject, sourceProp.GetValue(_helpee, null), null);
                 }
             }
         }

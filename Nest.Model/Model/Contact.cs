@@ -134,7 +134,11 @@ namespace Inkton.Nest.Model
         {
             get
             {
-                if (_status == "active")
+                if (_status == null)
+                {
+                    return "<Unset>";
+                }
+                else if (_status == "active")
                 {
                     string name = string.Empty;
                     if ((_firstName != null && _firstName.Length > 0) ||

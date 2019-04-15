@@ -51,6 +51,8 @@ namespace Inkton.Nest.Model
         public DateTime Time
         {
             get {
+                if (_id == null)
+                    return DateTime.Now;
                 long epocTime = long.Parse(_id);
                 if (_epochTimeFromMicroseconds)
                 {

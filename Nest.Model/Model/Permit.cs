@@ -29,8 +29,8 @@ namespace Inkton.Nest.Model
     public class Permit : Cloud.CloudObject
     {
         private string _token = "<-token->";
-        private string _password = null;
-        private string _securityCode = null;
+        private string _password = string.Empty;
+        private string _securityCode = string.Empty;
         private User _user = new User();
 
         public Permit()
@@ -46,21 +46,21 @@ namespace Inkton.Nest.Model
         public string Token
         {
             get { return _token; }
-            set { _token = value; }
+            set { SetProperty(ref _token, value); }
         }
 
         [JsonProperty("password")]
         public string Password
         {
             get { return _password; }
-            set { _password = value; }
+            set { SetProperty(ref _password, value); }
         }
 
         [JsonProperty("security_code")]
         public string SecurityCode
         {
             get { return _securityCode; }
-            set { _securityCode = value; }
+            set { SetProperty(ref _securityCode, value); }
         }
 
         [JsonProperty("owner")]
@@ -72,8 +72,8 @@ namespace Inkton.Nest.Model
 
         public void Invalid()
         {
-            _token = null;
-            _password = null;
+            _token = string.Empty;
+            _password = string.Empty;
         }
     }
 }

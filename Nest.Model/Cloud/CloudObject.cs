@@ -172,21 +172,25 @@ namespace Inkton.Nest.Cloud
         }
 
         public void CopyTo(ICloudObject otherObject)
-        {
-            var sourceProps = _helpee.GetType().GetRuntimeProperties()
-                             .Where(x => x.CanWrite).ToList();
-            var destProps = otherObject.GetType().GetRuntimeProperties()
-                   .Where(x => x.CanWrite).ToList();
-
-            foreach (var sourceProp in sourceProps)
+        {            
+            if (otherObject.GetType().IsAssignableFrom(_helpee.GetType()) ||
+                _helpee.GetType().IsAssignableFrom(otherObject.GetType()))
             {
-                var destProp = destProps.FirstOrDefault(
-                        prop => (prop.Name == sourceProp.Name &&
-                            prop.GetType() == sourceProp.GetType()));
+                var sourceProps = _helpee.GetType().GetRuntimeProperties()
+                                 .Where(x => x.CanWrite).ToList();
+                var destProps = otherObject.GetType().GetRuntimeProperties()
+                       .Where(x => x.CanWrite).ToList();
 
-                if (destProp != null)
+                foreach (var sourceProp in sourceProps)
                 {
-                    destProp.SetValue(otherObject, sourceProp.GetValue(this, null), null);
+                    var destProp = destProps.FirstOrDefault(
+                            prop => (prop.Name == sourceProp.Name &&
+                                prop.GetType() == sourceProp.GetType()));
+
+                    if (destProp != null)
+                    {
+                        destProp.SetValue(otherObject, sourceProp.GetValue(_helpee, null), null);
+                    }
                 }
             }
         }

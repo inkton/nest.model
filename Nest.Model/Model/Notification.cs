@@ -35,10 +35,6 @@ namespace Inkton.Nest.Model
         private string _support_text;
         private string _createdAt;
 
-        public Notification()
-        {
-        }
-
         public override string CloudKey
         {
             get { return _id.ToString(); }

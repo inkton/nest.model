@@ -37,12 +37,7 @@ namespace Inkton.Nest.Model
         private bool _primary;
         private string _ip;
         private string _aliases;
-
-        private AppDomainCertificate _cert = null;
-
-        public AppDomain()
-        {
-        }
+        private AppDomainCertificate _cert;
 
         [JsonIgnore]
         public AppDomainCertificate Certificate
@@ -140,10 +135,7 @@ namespace Inkton.Nest.Model
                 {
                     return "defaultdomain32.png";
                 }
-                else
-                {
-                    return "domain32.png";
-                }
+                return "domain32.png";
             }
         }
     }

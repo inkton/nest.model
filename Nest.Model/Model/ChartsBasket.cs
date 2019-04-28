@@ -32,10 +32,6 @@ namespace Inkton.Nest.Model
         private string _id;
         private object _basket;
 
-        public ChartsBasket()
-        {
-        }
-
         public override string CloudKey
         {
             get { return _id; }

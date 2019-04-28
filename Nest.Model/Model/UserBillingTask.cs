@@ -35,10 +35,6 @@ namespace Inkton.Nest.Model
         private double _amount;
         private double _balance;
 
-        public UserBillingTask()
-        {
-        }
-
         public override string CloudKey
         {
             get { return _id.ToString(); }
@@ -52,10 +48,7 @@ namespace Inkton.Nest.Model
                 {
                     return OwnedBy.CollectionKey + GetCollectionName() + "/";
                 }
-                else
-                {
-                    return GetCollectionName() + "/";
-                }
+                return GetCollectionName() + "/";
             }
         }
 

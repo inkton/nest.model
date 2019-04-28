@@ -39,10 +39,6 @@ namespace Inkton.Nest.Model
             private string _tag;
             private string _name;
 
-            public Version()
-            {
-            }
-
             public override string ToString()
             {
                 return _name;
@@ -73,10 +69,6 @@ namespace Inkton.Nest.Model
                 get { return _name; }
                 set { _name = value; }
             }
-        }
-
-        public SoftwareFramework()
-        {
         }
 
         public override string CloudKey

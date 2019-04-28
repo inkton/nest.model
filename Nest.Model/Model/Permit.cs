@@ -28,13 +28,17 @@ namespace Inkton.Nest.Model
     [Cloudname("permit")]
     public class Permit : Cloud.CloudObject
     {
-        private string _token = "<-token->";
-        private string _password = string.Empty;
-        private string _securityCode = string.Empty;
-        private User _user = new User();
+        private string _token;
+        private string _password;
+        private string _securityCode;
+        private User _user;
 
         public Permit()
         {
+            _token = "<-token->";
+            _password = string.Empty;
+            _securityCode = string.Empty;
+            _user = new User();
         }
 
         public override string CloudKey

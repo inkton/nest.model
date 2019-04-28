@@ -29,10 +29,6 @@ namespace Inkton.Nest.Model
     [Cloudname("token")]
     public class ChargeCardToken : CloudObject
     {
-        public ChargeCardToken()
-        {
-        }
-
         [JsonProperty("brand")]
         public string Brand
         {
@@ -72,13 +68,15 @@ namespace Inkton.Nest.Model
     public class PaymentMethod : CloudObject
     {
         private Int64 _id;
-        private string _type = "cc";
-        private string _tag = "stripe_cc";
+        private string _type;
+        private string _tag;
         private string _name;
-        private ChargeCardToken _proof = null;
+        private ChargeCardToken _proof;
 
         public PaymentMethod() 
         {
+            _type = "cc";
+            _tag = "stripe_cc";
         }
 
         public override string CloudKey

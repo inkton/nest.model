@@ -34,10 +34,6 @@ namespace Inkton.Nest.Model
         private string _region;
         private string _territory;
 
-        public Forest()
-        {
-        }
-
         public override string CloudKey
         {
             get { return _id.ToString(); }
@@ -95,7 +91,7 @@ namespace Inkton.Nest.Model
         {
             get
             {
-                switch(_territory)
+                switch (_territory)
                 {
                     case "SG": return "singapore.png";
                     case "JP": return "japan.png";
@@ -105,6 +101,9 @@ namespace Inkton.Nest.Model
                     case "GB": return "uk.png";
                     case "US": return "usa.png";
                     case "AU": return "australia.png";
+                    default:
+                        System.Diagnostics.Debugger.Break();
+                        break;
                 }
 
                 return "usa.png";

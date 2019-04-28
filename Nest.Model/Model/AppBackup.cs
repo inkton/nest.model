@@ -37,10 +37,6 @@ namespace Inkton.Nest.Model
         private Int64? _deploymentSize;
         private string _status;
 
-        public AppBackup()
-        {
-        }
-
         public override string CloudKey
         {
             get { return _id.ToString(); }

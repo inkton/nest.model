@@ -100,13 +100,8 @@ namespace Inkton.Nest.Cloud
             get
             {
                 if (_ownedBy != null)
-                {
                     return _ownedBy.CollectionKey + GetCollectionName() + "/";
-                }
-                else
-                {
-                    return GetCollectionName() + "/";
-                }
+                return GetCollectionName() + "/";
             }
         }
 
@@ -131,10 +126,8 @@ namespace Inkton.Nest.Cloud
             {
                 return cloudname.ObjectName;
             }
-            else
-            {
-                return _helpee.GetType().Name;
-            }
+
+            return _helpee.GetType().Name;
         }
 
         public string GetCollectionName()
@@ -145,10 +138,8 @@ namespace Inkton.Nest.Cloud
             {
                 return cloudname.CollectionName;
             }
-            else
-            {
-                return _helpee.GetType().Name.Pluralize();
-            }
+
+            return _helpee.GetType().Name.Pluralize();
         }
 
         public virtual bool SetProperty<T>(ref T storage, T value,
@@ -200,7 +191,7 @@ namespace Inkton.Nest.Cloud
     {
         private CloudObjectHelper _helper;
 
-        public CloudObject()
+        protected CloudObject()
         {
             _helper = new CloudObjectHelper(this);
         }

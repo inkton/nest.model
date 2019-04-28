@@ -34,10 +34,6 @@ namespace Inkton.Nest.Model
         private Int64 _contactId;
         private string _appPermissionTag;
 
-        public Permission()
-        {
-        }
-
         public override string CloudKey
         {
             get { return _appPermissionTag; }

@@ -31,10 +31,6 @@ namespace Inkton.Nest.Model
         private Int64 _id;
         private string _script;
 
-        public Devkit() 
-        {
-        }
-
         [JsonProperty("id")]
         public Int64 Id
         {

@@ -40,11 +40,7 @@ namespace Inkton.Nest.Model
 
         private static readonly DateTime _epochTime = 
             new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-        public AppAudit()
-        {
-        }
-
+            
         public override string CloudKey
         {
             get { return _id.ToString(); }

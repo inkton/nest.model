@@ -22,12 +22,12 @@
 
 namespace Inkton.Nest.Model
 {
-	public enum AppStatus : int
-	{
-		init = 0,
-		assigned = 1,
-		updating = 3,
-		deployed = 2,
-		removed = 4,
-	} 
+    public enum AppStatus
+    {
+        init = 0,
+        assigned = 1,
+        updating = 3,
+        deployed = 2,
+        removed = 4,
+    }
 }

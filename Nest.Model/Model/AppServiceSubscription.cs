@@ -32,11 +32,7 @@ namespace Inkton.Nest.Model
         private Int64 _appId;
         private Int64 _appServiceTierId;
         private string _status;
-        private AppServiceTier _serviceTier = null;
-
-        public AppServiceSubscription()
-        {
-        }
+        private AppServiceTier _serviceTier;
 
         public AppServiceTier ServiceTier
         {

@@ -34,10 +34,6 @@ namespace Inkton.Nest.Model
         private string _certificateChain;
         private string _type;
 
-        public AppDomainCertificate()
-        {
-        }
-
         public override string CloudKey
         {
             get { return _id.ToString(); }
@@ -99,10 +95,7 @@ namespace Inkton.Nest.Model
                 {
                     return "customdomaincert.png";
                 }
-                else
-                {
-                    return "freedomaincert.png";
-                }
+                return "freedomaincert.png";
             }
         }
     }

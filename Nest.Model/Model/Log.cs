@@ -33,12 +33,13 @@ namespace Inkton.Nest.Model
         private string _id;
         private static readonly DateTime _epoch = 
             new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        protected bool _epochTimeFromMicroseconds = false;
-        public Dictionary<string, object> _fields = 
-            new Dictionary<string, object>();
+        protected bool _epochTimeFromMicroseconds;
+        public Dictionary<string, object> _fields;
 
         public Log() 
         {
+            _epochTimeFromMicroseconds = false;
+            _fields = new Dictionary<string, object>();
         }
 
         [JsonProperty("id")]
@@ -58,10 +59,7 @@ namespace Inkton.Nest.Model
                 {
                     return _epoch.AddSeconds(epocTime / 1000000);
                 }
-                else
-                {
-                    return _epoch.AddSeconds(epocTime);
-                }
+                return _epoch.AddSeconds(epocTime);
             }
         }
 

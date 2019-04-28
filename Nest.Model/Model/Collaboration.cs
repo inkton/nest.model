@@ -31,10 +31,6 @@ namespace Inkton.Nest.Model
         private string _accountId;
         private string _state;
 
-        public Collaboration()
-        {
-        }
-
         public override string CloudKey
         {
             get { return _accountId; }

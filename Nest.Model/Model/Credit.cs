@@ -34,10 +34,6 @@ namespace Inkton.Nest.Model
         private string _value;
         private string _expiry;
 
-        public Credit()
-        {
-        }
-
         public override string CloudKey
         {
             get { return _code; }

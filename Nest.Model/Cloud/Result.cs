@@ -137,7 +137,7 @@ namespace Inkton.Nest.Cloud
             ) where T : ICloudObject, new()
         {
             Result<List<T>> result = new Result<List<T>>();
-            result.Code = 0;
+            result.Code = code;
             result.Text = text;
             result.Notes = notes;
             result.Data = new DataContainer<List<T>>();
@@ -197,7 +197,7 @@ namespace Inkton.Nest.Cloud
 
         protected DataContainer<T> Create(Type objectType, JObject jObject)
         {
-            if (objectType.Name.StartsWith("DataContainer"))
+            if (objectType.Name.StartsWith("DataContainer", StringComparison.CurrentCulture))
             {
                 return new DataContainer<T>();
             }
@@ -239,7 +239,7 @@ namespace Inkton.Nest.Cloud
 
         protected DataContainer<ObservableCollection<T>> Create(Type objectType, JObject jObject)
         {
-            if (objectType.Name.StartsWith("DataContainer"))
+            if (objectType.Name.StartsWith("DataContainer", StringComparison.CurrentCulture))
             {
                 return new DataContainer<ObservableCollection<T>>();
             }

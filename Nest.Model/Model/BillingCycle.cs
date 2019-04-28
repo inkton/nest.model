@@ -32,10 +32,6 @@ namespace Inkton.Nest.Model
         private string _begin;
         private string _end;
 
-        public BillingCycle()
-        {
-        }
-
         public override string CloudKey
         {
             get { return _id.ToString(); }

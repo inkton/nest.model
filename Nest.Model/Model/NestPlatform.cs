@@ -32,10 +32,6 @@ namespace Inkton.Nest.Model
         private string _tag;
         private string _name;
 
-        public NestPlatform()
-        {
-        }
-
         public override string CloudKey
         {
             get { return _id.ToString(); }

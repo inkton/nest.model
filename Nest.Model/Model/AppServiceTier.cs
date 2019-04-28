@@ -38,10 +38,6 @@ namespace Inkton.Nest.Model
         private decimal _itemCost;
         private string _featuresIncluded;
 
-        public AppServiceTier() 
-        {
-        }
-
         public override string CloudKey
         {
             get { return _id.ToString(); }

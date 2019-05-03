@@ -101,6 +101,10 @@ namespace Inkton.Nest.Model
                     case "GB": return "uk.png";
                     case "US": return "usa.png";
                     case "AU": return "australia.png";
+                    case "IE": return "ireland.png";
+                    case "IN": return "india.png";
+                    case "CA": return "canada.png";
+                    case "KR": return "skorea.png";
                     default:
                         System.Diagnostics.Debugger.Break();
                         break;

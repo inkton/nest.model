@@ -25,18 +25,14 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("app_service_subscription")]
+    [Cloudname("app_service_subscription")]
     public class AppServiceSubscription : CloudObject
     {
         private Int64 _id;
         private Int64 _appId;
         private Int64 _appServiceTierId;
         private string _status;
-        private AppServiceTier _serviceTier = null;
-
-        public AppServiceSubscription()
-        {
-        }
+        private AppServiceTier _serviceTier;
 
         public AppServiceTier ServiceTier
         {

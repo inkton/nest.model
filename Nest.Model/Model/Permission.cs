@@ -25,7 +25,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("permission")]
+    [Cloudname("permission")]
     public class Permission : CloudObject
     {
         private Int64 _id;
@@ -33,10 +33,6 @@ namespace Inkton.Nest.Model
         private Int64? _userId;
         private Int64 _contactId;
         private string _appPermissionTag;
-
-        public Permission()
-        {
-        }
 
         public override string CloudKey
         {

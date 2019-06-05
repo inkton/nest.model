@@ -26,7 +26,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("app_backup")]
+    [Cloudname("app_backup")]
 
     public class AppBackup : CloudObject
     {
@@ -36,10 +36,6 @@ namespace Inkton.Nest.Model
         private string _description;
         private Int64? _deploymentSize;
         private string _status;
-
-        public AppBackup()
-        {
-        }
 
         public override string CloudKey
         {

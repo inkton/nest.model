@@ -25,7 +25,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("notification")]
+    [Cloudname("notification")]
     public class Notification : CloudObject
     {
         private Int64 _id;
@@ -34,10 +34,6 @@ namespace Inkton.Nest.Model
         private string _activity;
         private string _support_text;
         private string _createdAt;
-
-        public Notification()
-        {
-        }
 
         public override string CloudKey
         {

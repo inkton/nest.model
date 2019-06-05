@@ -22,11 +22,11 @@
 
 namespace Inkton.Nest.Model
 {
-	public enum AppServiceSubscriptionStatus : int
-	{
-		active = 0,
-		inactive = 1,
-		stopped = 3,
-		started = 3,
-	}
+    public enum AppServiceSubscriptionStatus
+    {
+        active = 0,
+        inactive = 1,
+        stopped = 3,
+        started = 3,
+    }
 }

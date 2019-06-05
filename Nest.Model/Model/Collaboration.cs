@@ -25,15 +25,11 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("collaboration")]
+    [Cloudname("collaboration")]
     public class Collaboration : Cloud.CloudObject
     {
         private string _accountId;
         private string _state;
-
-        public Collaboration()
-        {
-        }
 
         public override string CloudKey
         {

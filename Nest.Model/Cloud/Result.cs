@@ -69,7 +69,7 @@ namespace Inkton.Nest.Cloud
             return continuation;
         }
 
-        protected static void FillNullsFrom(CloudObject thisObject, CloudObject otherObject)
+        protected static void FillNullsFrom(ICloudObject thisObject, ICloudObject otherObject)
         {
             /* Fill otherObject null properties with 
              * this object object properties.
@@ -118,7 +118,7 @@ namespace Inkton.Nest.Cloud
             int code = 0,
             string text = null,
             string notes = null
-            ) where T : CloudObject, new()
+            ) where T : ICloudObject, new()
         {
             Result<T> result = new Result<T>();
             result.Code = code;
@@ -134,10 +134,10 @@ namespace Inkton.Nest.Cloud
             int code = 0,
             string text = null,
             string notes = null
-            ) where T : CloudObject, new()
+            ) where T : ICloudObject, new()
         {
             Result<List<T>> result = new Result<List<T>>();
-            result.Code = 0;
+            result.Code = code;
             result.Text = text;
             result.Notes = notes;
             result.Data = new DataContainer<List<T>>();
@@ -146,7 +146,7 @@ namespace Inkton.Nest.Cloud
         }
 
         private static string Json<T>(Result<T> result)
-            where T : CloudObject, new()
+            where T : ICloudObject, new()
         {
             var serializerSettings = new JsonSerializerSettings();
             serializerSettings.ContractResolver = new DataContainerResolver(new T().GetObjectName());
@@ -155,7 +155,7 @@ namespace Inkton.Nest.Cloud
         }
 
         private static string Json<T>(Result<List<T>> result)
-            where T : CloudObject, new()
+            where T : ICloudObject, new()
         {
             var serializerSettings = new JsonSerializerSettings();
             serializerSettings.ContractResolver = new DataContainerResolver(new T().GetCollectionName());
@@ -188,7 +188,7 @@ namespace Inkton.Nest.Cloud
         }
     }
 
-    public class SingleDataContainerConverter<T> : JsonConverter where T : Inkton.Nest.Cloud.CloudObject, new()
+    public class SingleDataContainerConverter<T> : JsonConverter where T : Inkton.Nest.Cloud.ICloudObject, new()
     {
         public override bool CanConvert(Type objectType)
         {
@@ -197,7 +197,7 @@ namespace Inkton.Nest.Cloud
 
         protected DataContainer<T> Create(Type objectType, JObject jObject)
         {
-            if (objectType.Name.StartsWith("DataContainer"))
+            if (objectType.Name.StartsWith("DataContainer", StringComparison.CurrentCulture))
             {
                 return new DataContainer<T>();
             }
@@ -230,7 +230,7 @@ namespace Inkton.Nest.Cloud
         }
     }
 
-    public class MultipleDataContainerConverter<T> : JsonConverter where T : Inkton.Nest.Cloud.CloudObject, new()
+    public class MultipleDataContainerConverter<T> : JsonConverter where T : Inkton.Nest.Cloud.ICloudObject, new()
     {
         public override bool CanConvert(Type objectType)
         {
@@ -239,7 +239,7 @@ namespace Inkton.Nest.Cloud
 
         protected DataContainer<ObservableCollection<T>> Create(Type objectType, JObject jObject)
         {
-            if (objectType.Name.StartsWith("DataContainer"))
+            if (objectType.Name.StartsWith("DataContainer", StringComparison.CurrentCulture))
             {
                 return new DataContainer<ObservableCollection<T>>();
             }
@@ -281,7 +281,7 @@ namespace Inkton.Nest.Cloud
         }
     }
 
-    public class ResultSingle<PayloadT> : Result<PayloadT> where PayloadT : Inkton.Nest.Cloud.CloudObject, new()
+    public class ResultSingle<PayloadT> : Result<PayloadT> where PayloadT : Inkton.Nest.Cloud.ICloudObject, new()
     {
         public ResultSingle() { }
 
@@ -305,7 +305,7 @@ namespace Inkton.Nest.Cloud
         }
     }
 
-    public class ResultMultiple<PayloadT> : Result<ObservableCollection<PayloadT>> where PayloadT : Inkton.Nest.Cloud.CloudObject, new()
+    public class ResultMultiple<PayloadT> : Result<ObservableCollection<PayloadT>> where PayloadT : Inkton.Nest.Cloud.ICloudObject, new()
     {
         public ResultMultiple() { }
 

@@ -26,7 +26,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("app_service_tier")]
+    [Cloudname("app_service_tier")]
     public class AppServiceTier : CloudObject
     {
         private Int64 _id;
@@ -37,10 +37,6 @@ namespace Inkton.Nest.Model
         private string _period;
         private decimal _itemCost;
         private string _featuresIncluded;
-
-        public AppServiceTier() 
-        {
-        }
 
         public override string CloudKey
         {

@@ -25,18 +25,21 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("deployment")]
+    [Cloudname("deployment")]
     public class Deployment : CloudObject
     {
-        private Int64 _id = -1;  // _id == -1 is undeployed
+        private Int64 _id;
         private Int64 _appId;
         private Int64 _forestId;
         private Int64 _frameworkVersionId;
-        private string _status = "complete";
-        private bool _makeBackup = true;
+        private string _status;
+        private bool _makeBackup;
 
         public Deployment()
         {
+            _id = -1;  // _id == -1 is undeployed
+            _status = "complete";
+            _makeBackup = true;
         }
 
         public override string CloudKey
@@ -110,18 +113,12 @@ namespace Inkton.Nest.Model
         {
             get
             {
-                if (_status == "updating")
+                switch(_status)
                 {
-                    return "deploymentbusy.png";
-                }
-                else if (_status == "complete")
-                {
-                    return "deploymentactive.png";
-                }
-                else
-                {
+                    case "updating": return "deploymentbusy.png";
+                    case "complete": return "deploymentactive.png";
                     // deployment failed icon needed
-                    return "deploymentactive.png";
+                    default: return "deploymentactive.png";
                 }
             }
         }

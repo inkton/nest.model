@@ -25,16 +25,20 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("permit")]
+    [Cloudname("permit")]
     public class Permit : Cloud.CloudObject
     {
-        private string _token = "<-token->";
-        private string _password = null;
-        private string _securityCode = null;
+        private string _token;
+        private string _password;
+        private string _securityCode;
         private User _user;
 
-        public Permit() 
+        public Permit()
         {
+            _token = string.Empty;
+            _password = string.Empty;
+            _securityCode = string.Empty;
+            _user = new User();
         }
 
         public override string CloudKey
@@ -46,19 +50,21 @@ namespace Inkton.Nest.Model
         public string Token
         {
             get { return _token; }
-            set { _token = value; }
+            set { SetProperty(ref _token, value); }
         }
 
+        [JsonProperty("password")]
         public string Password
         {
             get { return _password; }
-            set { _password = value; }
+            set { SetProperty(ref _password, value); }
         }
 
+        [JsonProperty("security_code")]
         public string SecurityCode
         {
             get { return _securityCode; }
-            set { _securityCode = value; }
+            set { SetProperty(ref _securityCode, value); }
         }
 
         [JsonProperty("owner")]
@@ -66,6 +72,12 @@ namespace Inkton.Nest.Model
         {
             get { return _user; }
             set { SetProperty(ref _user, value); }
+        }
+
+        public void Invalid()
+        {
+            _token = string.Empty;
+            _password = string.Empty;
         }
     }
 }

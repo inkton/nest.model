@@ -24,7 +24,7 @@ using System.Collections.Generic;
 
 namespace Inkton.Nest.Model
 {
-    public class Geography
+    public static class Geography
     {
         public class ISO3166Country
         {

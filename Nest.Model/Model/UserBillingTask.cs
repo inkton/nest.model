@@ -25,7 +25,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("user_billing_task")]
+    [Cloudname("user_billing_task")]
     public class UserBillingTask : CloudObject
     {
         private Int64 _id;
@@ -34,10 +34,6 @@ namespace Inkton.Nest.Model
         private string _activity;
         private double _amount;
         private double _balance;
-
-        public UserBillingTask()
-        {
-        }
 
         public override string CloudKey
         {
@@ -52,10 +48,7 @@ namespace Inkton.Nest.Model
                 {
                     return OwnedBy.CollectionKey + GetCollectionName() + "/";
                 }
-                else
-                {
-                    return GetCollectionName() + "/";
-                }
+                return GetCollectionName() + "/";
             }
         }
 

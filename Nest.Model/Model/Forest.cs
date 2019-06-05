@@ -25,7 +25,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("forest")]
+    [Cloudname("forest")]
     public class Forest : CloudObject
     {
         private Int64 _id;
@@ -33,10 +33,6 @@ namespace Inkton.Nest.Model
         private string _name;
         private string _region;
         private string _territory;
-
-        public Forest()
-        {
-        }
 
         public override string CloudKey
         {
@@ -95,7 +91,7 @@ namespace Inkton.Nest.Model
         {
             get
             {
-                switch(_territory)
+                switch (_territory)
                 {
                     case "SG": return "singapore.png";
                     case "JP": return "japan.png";
@@ -105,6 +101,13 @@ namespace Inkton.Nest.Model
                     case "GB": return "uk.png";
                     case "US": return "usa.png";
                     case "AU": return "australia.png";
+                    case "IE": return "ireland.png";
+                    case "IN": return "india.png";
+                    case "CA": return "canada.png";
+                    case "KR": return "skorea.png";
+                    default:
+                        System.Diagnostics.Debugger.Break();
+                        break;
                 }
 
                 return "usa.png";

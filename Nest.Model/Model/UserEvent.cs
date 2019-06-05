@@ -25,7 +25,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("user_event")]
+    [Cloudname("user_event")]
     public class UserEvent : CloudObject
     {
         private Int64 _id;
@@ -33,10 +33,6 @@ namespace Inkton.Nest.Model
         private string _activity;
         private string _support_text;
         private string _createdAt;
-
-        public UserEvent()
-        {
-        }
 
         public override string CloudKey
         {

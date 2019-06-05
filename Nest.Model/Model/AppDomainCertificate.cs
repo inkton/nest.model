@@ -25,7 +25,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("app_domain_certificate")]
+    [Cloudname("app_domain_certificate")]
     public class AppDomainCertificate : CloudObject
     {
         private Int64 _id;
@@ -33,10 +33,6 @@ namespace Inkton.Nest.Model
         private string _privateKey;
         private string _certificateChain;
         private string _type;
-
-        public AppDomainCertificate()
-        {
-        }
 
         public override string CloudKey
         {
@@ -99,10 +95,7 @@ namespace Inkton.Nest.Model
                 {
                     return "customdomaincert.png";
                 }
-                else
-                {
-                    return "freedomaincert.png";
-                }
+                return "freedomaincert.png";
             }
         }
     }

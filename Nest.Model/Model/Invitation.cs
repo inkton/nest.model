@@ -26,28 +26,21 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("invitation")]
+    [Cloudname("invitation")]
     public class Invitation : Contact
     {
         private string _appName;
         private string _appTag;
 
-        public Invitation() 
-        {
-        }
-
         public override string Icon
         {
             get
             {
-                if (Status == "active") 
+                if (Status == "active")
                 {
                     return "invitejoin32.png";
                 }
-                else
-                {
-                    return "inviteleave32.png";
-                }
+                return "inviteleave32.png";
             }
         }
 

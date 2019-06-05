@@ -33,12 +33,13 @@ namespace Inkton.Nest.Model
         private string _id;
         private static readonly DateTime _epoch = 
             new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        protected bool _epochTimeFromMicroseconds = false;
-        public Dictionary<string, object> _fields = 
-            new Dictionary<string, object>();
+        protected bool _epochTimeFromMicroseconds;
+        public Dictionary<string, object> _fields;
 
         public Log() 
         {
+            _epochTimeFromMicroseconds = false;
+            _fields = new Dictionary<string, object>();
         }
 
         [JsonProperty("id")]
@@ -51,15 +52,14 @@ namespace Inkton.Nest.Model
         public DateTime Time
         {
             get {
+                if (_id == null)
+                    return DateTime.Now;
                 long epocTime = long.Parse(_id);
                 if (_epochTimeFromMicroseconds)
                 {
                     return _epoch.AddSeconds(epocTime / 1000000);
                 }
-                else
-                {
-                    return _epoch.AddSeconds(epocTime);
-                }
+                return _epoch.AddSeconds(epocTime);
             }
         }
 
@@ -77,7 +77,7 @@ namespace Inkton.Nest.Model
         }
     }
 
-    [CloudName("log")]
+    [Cloudname("log")]
     public class NestLog : Log
     {
         private string _eventId;
@@ -146,7 +146,7 @@ namespace Inkton.Nest.Model
         }
     }
 
-    [CloudName("log")]
+    [Cloudname("log")]
     public class SystemCPULog : Log
     {
         private double _guestNice;
@@ -230,7 +230,7 @@ namespace Inkton.Nest.Model
         }
     }
 
-    [CloudName("log")]
+    [Cloudname("log")]
     public class SystemIOLog : Log
     {
         private double _in;
@@ -256,7 +256,7 @@ namespace Inkton.Nest.Model
         }
     }
 
-    [CloudName("log")]
+    [Cloudname("log")]
     public class SystemIPLog : Log
     {
         private double _received;
@@ -282,7 +282,7 @@ namespace Inkton.Nest.Model
         }
     }
 
-    [CloudName("log")]
+    [Cloudname("log")]
     public class SystemRAMLog : Log
     {
         private double _free;

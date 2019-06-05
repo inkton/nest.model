@@ -35,7 +35,7 @@ namespace Inkton.Nest.Model
 
         public Permit()
         {
-            _token = "<-token->";
+            _token = string.Empty;
             _password = string.Empty;
             _securityCode = string.Empty;
             _user = new User();

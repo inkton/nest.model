@@ -25,16 +25,12 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("billing_cycle")]
+    [Cloudname("billing_cycle")]
     public class BillingCycle : CloudObject
     {
         private Int64 _id;
         private string _begin;
         private string _end;
-
-        public BillingCycle()
-        {
-        }
 
         public override string CloudKey
         {

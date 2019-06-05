@@ -25,7 +25,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("credit")]
+    [Cloudname("credit")]
     public class Credit : CloudObject
     {
         private Int64 _id;
@@ -33,10 +33,6 @@ namespace Inkton.Nest.Model
         private string _type;
         private string _value;
         private string _expiry;
-
-        public Credit()
-        {
-        }
 
         public override string CloudKey
         {

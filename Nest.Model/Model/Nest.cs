@@ -25,7 +25,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("nest")]
+    [Cloudname("nest")]
     public class Nest : CloudObject
     {
         private Int64 _id;
@@ -37,10 +37,6 @@ namespace Inkton.Nest.Model
         private Int64 _scale;
         private string _scaleSize;
         private NestPlatform _platform;
-
-        public Nest() 
-        {
-        }
 
         public override string CloudKey
         {
@@ -81,6 +77,7 @@ namespace Inkton.Nest.Model
             }
         }
 
+        [JsonProperty("platform")]
         public NestPlatform Platform
         {
             get { return _platform; }
@@ -152,17 +149,12 @@ namespace Inkton.Nest.Model
                     return string.Empty;
                 }
 
-                if (_platform.Tag == "mvc")
+                switch(_platform.Tag)
                 {
-                    return "webnet32.png";
-                }
-                else if (_platform.Tag == "api")
-                {
-                    return "websocketnet32.png";
-                }
-                else
-                {
-                    return "worker32.png";
+                    case "mvc": return "webnet32.png";
+                    case "api": return "websocketnet32.png";
+                    case "worker": return "worker32.png";
+                    default: System.Diagnostics.Debugger.Break(); return "";
                 }
             }
         }

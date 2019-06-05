@@ -26,7 +26,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("chart")]
+    [Cloudname("chart")]
     public class Chart : CloudObject
     {
         private string _id;
@@ -44,16 +44,12 @@ namespace Inkton.Nest.Model
         private Int64 _lastEntry;
         private Int64 _updateEvery;
         private double _min, _max;
-        private Points _result = null;
+        private Points _result;
 
         public class Points : CloudObject
         {
             private string[] _labels;
             private object[,] _data;
-
-            public Points()
-            {
-            }
 
             [JsonProperty("labels")]
             public string[] Labels
@@ -68,10 +64,6 @@ namespace Inkton.Nest.Model
                 get { return _data; }
                 set { _data = value; }
             }
-        }
-
-        public Chart()
-        {
         }
 
         public override string CloudKey

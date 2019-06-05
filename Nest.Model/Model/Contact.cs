@@ -26,7 +26,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("contact")]
+    [Cloudname("contact")]
     public class Contact : CloudObject
     {
         private Int64 _id;
@@ -52,7 +52,7 @@ namespace Inkton.Nest.Model
 
         public override string CloudKey
         {
-            get { return _email.ToString(); }
+            get { return _email; }
         }
 
         [JsonProperty("id")]
@@ -134,18 +134,22 @@ namespace Inkton.Nest.Model
         {
             get
             {
+                if (_status == null)
+                {
+                    return "<Unset>";
+                }
                 if (_status == "active")
                 {
                     string name = string.Empty;
-                    if ((_firstName != null && _firstName.Length > 0) ||
-                        (_lastName != null && _lastName.Length > 0 ))
+                    if ((!string.IsNullOrEmpty(_firstName)) ||
+                        (!string.IsNullOrEmpty(_lastName)))
                     {
-                        if (_firstName != null && _firstName.Length > 0)
+                        if (!string.IsNullOrEmpty(_firstName))
                         {
                             name = _firstName;
                             name += " ";
                         }
-                        if (_lastName != null && _lastName.Length > 0)
+                        if (!string.IsNullOrEmpty(_lastName))
                         {
                             name += _lastName;
                         }
@@ -156,11 +160,8 @@ namespace Inkton.Nest.Model
                     name += _nickname;
                     return name.Trim();
                 }
-                else
-                {
-                    String[] elements = Regex.Split(_email, "@");
-                    return elements[0];
-                }
+                String[] elements = Regex.Split(_email, "@");
+                return elements[0];
             }
         }
 
@@ -171,10 +172,7 @@ namespace Inkton.Nest.Model
                 {
                     return "contactverified32.png";
                 }
-                else
-                {
-                    return "contact32.png";
-                }
+                return "contact32.png";
             }
         }
 
@@ -186,10 +184,7 @@ namespace Inkton.Nest.Model
                 {
                     return "Active";
                 }
-                else
-                {
-                    return "Invited";
-                }
+                return "Invited";
             }
         }
     }

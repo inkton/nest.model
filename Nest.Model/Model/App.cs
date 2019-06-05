@@ -27,7 +27,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("app")]
+    [Cloudname("app")]
     public class App : CloudObject
     {
         private Int64 _id;
@@ -41,15 +41,16 @@ namespace Inkton.Nest.Model
         private Int64? _primaryDomainId;
         private string _unifiedPassword, _networkPassword, _servicesPassword;
         private Int64? _serviceTierId;
-        private int _backupHour = 0;
+        private int _backupHour;
 
-        private Deployment _deployment = null;
-        private OwnerCapabilities _ownerCapabilities = null;
+        private Deployment _deployment;
+        private OwnerCapabilities _ownerCapabilities;
         private ObservableCollection<AppServiceSubscription> _subscriptions;
 
         public App()
         {
             _status = "init";
+            _backupHour = 0;
         }
 
         public string Hostname
@@ -71,10 +72,7 @@ namespace Inkton.Nest.Model
 
                     return OwnedBy.CollectionKey + GetCollectionName() + "/";
                 }
-                else
-                {
-                    return GetCollectionName() + "/";
-                }
+                return GetCollectionName() + "/";
             }
         }
 
@@ -167,25 +165,17 @@ namespace Inkton.Nest.Model
             {
                 if (IsDeploymentValid)
                 {
-                    if (_deployment.Status == "updating")
+                    switch(_deployment.Status)
                     {
-                        return "Updating";
-                    }
-                    else if (_deployment.Status == "failed")
-                    {
-                        return "Failed";
-                    }
-                    else
-                    {
-                        return char.ToUpper(_status[0]) +
-                            _status.Substring(1);
+                        case "updating": return "Updating";
+                        case "failed": return "Failed";
+                        default:
+                            return char.ToUpper(_status[0]) +
+                                _status.Substring(1);
                     }
                 }
-                else
-                {
-                    return char.ToUpper(_status[0]) +
-                        _status.Substring(1);
-                }
+                return char.ToUpper(_status[0]) +
+                    _status.Substring(1);
             }
         }
 
@@ -202,10 +192,7 @@ namespace Inkton.Nest.Model
                     return (_deployment.Status == "complete" ||
                             _deployment.Status == "failed");
                 }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
         }
 
@@ -324,10 +311,7 @@ namespace Inkton.Nest.Model
                 {
                     return "homesteadactive32.png";
                 }
-                else
-                {
-                    return "homesteadinactive32.png";
-                }
+                return "homesteadinactive32.png";
             }
         }
     }

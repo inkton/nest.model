@@ -22,9 +22,9 @@
 
 namespace Inkton.Nest.Model
 {
-	public enum AppType : int
-	{
-		uniflow = 0,
-		biflow = 1,
-	}
+    public enum AppType
+    {
+        uniflow = 0,
+        biflow = 1,
+    }
 }

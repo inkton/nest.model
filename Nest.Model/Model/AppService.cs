@@ -27,7 +27,7 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("app_service")]
+    [Cloudname("app_service")]
     public class AppService : CloudObject
     {
         private Int64 _id;
@@ -37,14 +37,8 @@ namespace Inkton.Nest.Model
         private string _rules;
         private string _featuresAll;
         private Int64? _port;
-
-        private Deployment _deployment = null;
-
+        private Deployment _deployment;
         private ObservableCollection<AppServiceTier> _tiers;
-
-        public AppService() 
-        {
-        }
 
         public Deployment deployment
         {

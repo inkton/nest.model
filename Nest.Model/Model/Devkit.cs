@@ -25,15 +25,11 @@ using Newtonsoft.Json;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("devkit")]
+    [Cloudname("devkit")]
     public class Devkit : CloudObject
     {
         private Int64 _id;
         private string _script;
-
-        public Devkit() 
-        {
-        }
 
         [JsonProperty("id")]
         public Int64 Id

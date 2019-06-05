@@ -25,16 +25,12 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [CloudName("nest_platform")]
+    [Cloudname("nest_platform")]
     public class NestPlatform : CloudObject
     {
         private Int64 _id;
         private string _tag;
         private string _name;
-
-        public NestPlatform()
-        {
-        }
 
         public override string CloudKey
         {

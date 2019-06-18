@@ -26,7 +26,7 @@ using Inkton.Nest.Cloud;
 namespace Inkton.Nest.Model
 {
     [Cloudname("permit")]
-    public class Permit : Cloud.CloudObject
+    public class Permit : CloudObject
     {
         private string _token;
         private string _password;

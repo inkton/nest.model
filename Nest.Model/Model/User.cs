@@ -34,20 +34,6 @@ namespace Inkton.Nest.Model
     public class User : IdentityUser<int>,  
         ICloudObject, INotifyPropertyChanged
     {
-        private int _id;
-        private string _email, _normalizedEmail;
-        private string _username, _normalizedUsername;
-        private bool _emailConfirmed;
-        private string _passwordHash;
-        private string _securityStamp;
-        private string _concurrencyStamp;
-        private string _phonenumber;
-        private bool _phonenumberConfirmed;
-        private bool _twoFactorEnabled;
-        private DateTimeOffset? _lockoutEnd;
-        private bool _lockoutEnabled;
-        private int _accessFailedCount;
-
         private string _territoryISOCode;
         private string _firstName;
         private string _lastName;
@@ -131,106 +117,151 @@ namespace Inkton.Nest.Model
         [JsonProperty("id")]
         public override int Id
         {
-            get { return _id; }
-            set { SetProperty(ref _id, value); }
+            get { return base.Id; }
+            set {
+                base.Id = value;
+                OnPropertyChanged("Id");
+            }
         }
 
         [JsonProperty("email")]
         public override string Email
         {
-            get { return _email; }
-            set { SetProperty(ref _email, value); }
+            get { return base.Email; }
+            set {
+                base.Email = value;
+                OnPropertyChanged("Email");
+            }
         }
 
         [JsonProperty("normalized_email")]
         public override string NormalizedEmail
         {
-            get { return _normalizedEmail; }
-            set { SetProperty(ref _normalizedEmail, value); }
+            get { return base.NormalizedEmail; }
+            set {
+                base.NormalizedEmail = value;
+                OnPropertyChanged("NormalizedEmail");
+            }
         }
 
         [JsonProperty("username")]
         public override string UserName
         {
-            get { return _username; }
-            set { SetProperty(ref _username, value); }
+            get { return base.UserName; }
+            set {
+                base.UserName = value;
+                OnPropertyChanged("UserName");
+            }
         }
 
         [JsonProperty("normalized_username")]
         public override string NormalizedUserName
         {
-            get { return _normalizedUsername; }
-            set { SetProperty(ref _normalizedUsername, value); }
+            get { return base.NormalizedUserName; }
+            set {
+                base.NormalizedUserName = value;
+                OnPropertyChanged("NormalizedUserName");
+            }
         }
 
         [JsonProperty("email_confirmed")]
         public override bool EmailConfirmed
         {
-            get { return _emailConfirmed; }
-            set { SetProperty(ref _emailConfirmed, value); }
+            get { return base.EmailConfirmed; }
+            set {
+                base.EmailConfirmed = value;
+                OnPropertyChanged("EmailConfirmed");
+            }
         }
 
         [JsonProperty("password_hash")]
         public override string PasswordHash
         {
-            get { return _passwordHash; }
-            set { SetProperty(ref _passwordHash, value); }
+            get { return base.PasswordHash; }
+            set {
+                base.PasswordHash = value;
+                OnPropertyChanged("PasswordHash");
+            }
         }
 
         [JsonProperty("security_stamp")]
         public override string SecurityStamp
         {
-            get { return _securityStamp; }
-            set { SetProperty(ref _securityStamp, value); }
+            get { return base.SecurityStamp; }
+            set {
+                base.SecurityStamp = value;
+                OnPropertyChanged("SecurityStamp");
+            }
         }
 
         [JsonProperty("concurrency_stamp")]
         public override string ConcurrencyStamp
         {
-            get { return _concurrencyStamp; }
-            set { SetProperty(ref _concurrencyStamp, value); }
+            get { return base.ConcurrencyStamp; }
+            set {
+                base.ConcurrencyStamp = value;
+                OnPropertyChanged("ConcurrencyStamp");
+            }
         }
 
         [JsonProperty("phonenumber")]
         public override string PhoneNumber
         {
-            get { return _phonenumber; }
-            set { SetProperty(ref _phonenumber, value); }
+            get { return base.PhoneNumber; }
+            set {
+                base.PhoneNumber = value;
+                OnPropertyChanged("PhoneNumber");
+            }
         }
 
         [JsonProperty("phonenumber_confirmed")]
         public override bool PhoneNumberConfirmed
         {
-            get { return _phonenumberConfirmed; }
-            set { SetProperty(ref _phonenumberConfirmed, value); }
+            get { return base.PhoneNumberConfirmed; }
+            set {
+                base.PhoneNumberConfirmed = value;
+                OnPropertyChanged("PhoneNumberConfirmed");
+            }
         }
 
         [JsonProperty("two_factor_enabled")]
         public override bool TwoFactorEnabled
         {
-            get { return _twoFactorEnabled; }
-            set { SetProperty(ref _twoFactorEnabled, value); }
+            get { return base.TwoFactorEnabled; }
+            set {
+                base.TwoFactorEnabled = value;
+                OnPropertyChanged("TwoFactorEnabled");
+            }
         }
 
         [JsonProperty("lockout_end")]
         public override DateTimeOffset? LockoutEnd
         {
-            get { return _lockoutEnd; }
-            set { SetProperty(ref _lockoutEnd, value); }
+            get { return base.LockoutEnd; }
+            set {
+                base.LockoutEnd = value;
+                OnPropertyChanged("LockoutEnd");
+            }
         }
 
         [JsonProperty("lockout_enabled")]
         public override bool LockoutEnabled
         {
-            get { return _lockoutEnabled; }
-            set { SetProperty(ref _lockoutEnabled, value); }
+            get { return base.LockoutEnabled; }
+            set {
+                base.LockoutEnabled = value;
+                OnPropertyChanged("LockoutEnabled");
+            }
         }        
 
         [JsonProperty("access_failed_count")]
         public override int AccessFailedCount
         {
-            get { return _accessFailedCount; }
-            set { SetProperty(ref _accessFailedCount, value); }
+            get { return base.AccessFailedCount; }
+            set {
+                base.AccessFailedCount = value;
+                OnPropertyChanged("AccessFailedCount");
+            }
         }
 
         [JsonProperty("is_activated")]
@@ -244,8 +275,11 @@ namespace Inkton.Nest.Model
         [JsonProperty("nickname")]
         public string Nickname
         {
-            get { return _username; }
-            set { SetProperty(ref _username, value); }
+            get { return base.UserName; }
+            set {
+                base.UserName = value;
+                OnPropertyChanged("UserName");
+            }
         }
 
         [JsonProperty("territory_iso_code")]

@@ -19,7 +19,7 @@
     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Inkton.Nest.Cloud;
 
@@ -32,6 +32,7 @@ namespace Inkton.Nest.Model
         private string _password;
         private string _securityCode;
         private User _user;
+        private List<Role> _roles;
 
         public Permit()
         {
@@ -39,6 +40,11 @@ namespace Inkton.Nest.Model
             _password = string.Empty;
             _securityCode = string.Empty;
             _user = new User();
+        }
+
+        public bool IsValid
+        {
+            get { return !string.IsNullOrEmpty(_token); }
         }
 
         public override string CloudKey
@@ -72,6 +78,13 @@ namespace Inkton.Nest.Model
         {
             get { return _user; }
             set { SetProperty(ref _user, value); }
+        }
+
+        [JsonProperty("roles")]
+        public List<Role> Roles
+        {
+            get { return _roles; }
+            set { SetProperty(ref _roles, value); }
         }
 
         public void Invalid()

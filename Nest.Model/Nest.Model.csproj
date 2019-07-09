@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Title>Inkton NestModel</Title>
     <PackageId>Inkton.NestModel</PackageId>
-    <PackageVersion>1.1.4</PackageVersion>
+    <PackageVersion>1.1.5</PackageVersion>
     <PackageTags>paas,docker,nest.yt</PackageTags>
     <Authors>nest.yt</Authors>
     <Description>The Data Model for Nest.yt</Description>

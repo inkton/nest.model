@@ -255,6 +255,7 @@ namespace Inkton.Nest.Model
             }
         }
 
+        [JsonIgnore]
         public string UnifiedPassword
         {
             get { return _unifiedPassword; }
@@ -303,6 +304,7 @@ namespace Inkton.Nest.Model
             }
         }
 
+        [JsonIgnore]
         public string Icon
         {
             get

@@ -19,14 +19,15 @@
     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
 using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection;
 using System.Linq;
-using Newtonsoft.Json;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using Humanizer;
+using Newtonsoft.Json;
 
 namespace Inkton.Nest.Cloud
 {

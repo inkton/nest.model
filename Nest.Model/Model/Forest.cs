@@ -87,6 +87,7 @@ namespace Inkton.Nest.Model
             }
         }
 
+        [JsonIgnore]
         public string Icon
         {
             get

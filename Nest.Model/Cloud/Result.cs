@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Reflection;
+using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -184,11 +185,21 @@ namespace Inkton.Nest.Cloud
             if (property.PropertyName == "Payload")
                 property.PropertyName = _name;
 
+            /* 
+            The user class has security sensitive properties
+            such as the password hash that should not be exposed
+            outside of the server.  If a property from IdentityUser<int>
+            is needed to be sent then override the derived class.
+            */
+            if(property.DeclaringType == typeof(IdentityUser<int>))
+                property.ShouldSerialize = instance => { return false; };
+
             return property;
         }
     }
 
-    public class SingleDataContainerConverter<T> : JsonConverter where T : Inkton.Nest.Cloud.ICloudObject, new()
+    public class SingleDataContainerConverter<T> : JsonConverter
+        where T : ICloudObject, new()
     {
         public override bool CanConvert(Type objectType)
         {
@@ -230,7 +241,8 @@ namespace Inkton.Nest.Cloud
         }
     }
 
-    public class MultipleDataContainerConverter<T> : JsonConverter where T : Inkton.Nest.Cloud.ICloudObject, new()
+    public class MultipleDataContainerConverter<T> : JsonConverter
+        where T : ICloudObject, new()
     {
         public override bool CanConvert(Type objectType)
         {
@@ -281,7 +293,8 @@ namespace Inkton.Nest.Cloud
         }
     }
 
-    public class ResultSingle<PayloadT> : Result<PayloadT> where PayloadT : Inkton.Nest.Cloud.ICloudObject, new()
+    public class ResultSingle<PayloadT> : Result<PayloadT>
+        where PayloadT : ICloudObject, new()
     {
         public ResultSingle() { }
 
@@ -305,7 +318,8 @@ namespace Inkton.Nest.Cloud
         }
     }
 
-    public class ResultMultiple<PayloadT> : Result<ObservableCollection<PayloadT>> where PayloadT : Inkton.Nest.Cloud.ICloudObject, new()
+    public class ResultMultiple<PayloadT> : Result<ObservableCollection<PayloadT>>
+        where PayloadT : ICloudObject, new()
     {
         public ResultMultiple() { }
 

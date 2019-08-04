@@ -134,16 +134,6 @@ namespace Inkton.Nest.Model
             }
         }
 
-        [JsonProperty("normalized_email")]
-        public override string NormalizedEmail
-        {
-            get { return base.NormalizedEmail; }
-            set {
-                base.NormalizedEmail = value;
-                OnPropertyChanged("NormalizedEmail");
-            }
-        }
-
         [JsonProperty("username")]
         public override string UserName
         {
@@ -151,56 +141,6 @@ namespace Inkton.Nest.Model
             set {
                 base.UserName = value;
                 OnPropertyChanged("UserName");
-            }
-        }
-
-        [JsonProperty("normalized_username")]
-        public override string NormalizedUserName
-        {
-            get { return base.NormalizedUserName; }
-            set {
-                base.NormalizedUserName = value;
-                OnPropertyChanged("NormalizedUserName");
-            }
-        }
-
-        [JsonProperty("email_confirmed")]
-        public override bool EmailConfirmed
-        {
-            get { return base.EmailConfirmed; }
-            set {
-                base.EmailConfirmed = value;
-                OnPropertyChanged("EmailConfirmed");
-            }
-        }
-
-        [JsonProperty("password_hash")]
-        public override string PasswordHash
-        {
-            get { return base.PasswordHash; }
-            set {
-                base.PasswordHash = value;
-                OnPropertyChanged("PasswordHash");
-            }
-        }
-
-        [JsonProperty("security_stamp")]
-        public override string SecurityStamp
-        {
-            get { return base.SecurityStamp; }
-            set {
-                base.SecurityStamp = value;
-                OnPropertyChanged("SecurityStamp");
-            }
-        }
-
-        [JsonProperty("concurrency_stamp")]
-        public override string ConcurrencyStamp
-        {
-            get { return base.ConcurrencyStamp; }
-            set {
-                base.ConcurrencyStamp = value;
-                OnPropertyChanged("ConcurrencyStamp");
             }
         }
 
@@ -214,16 +154,6 @@ namespace Inkton.Nest.Model
             }
         }
 
-        [JsonProperty("phonenumber_confirmed")]
-        public override bool PhoneNumberConfirmed
-        {
-            get { return base.PhoneNumberConfirmed; }
-            set {
-                base.PhoneNumberConfirmed = value;
-                OnPropertyChanged("PhoneNumberConfirmed");
-            }
-        }
-
         [JsonProperty("two_factor_enabled")]
         public override bool TwoFactorEnabled
         {
@@ -233,37 +163,7 @@ namespace Inkton.Nest.Model
                 OnPropertyChanged("TwoFactorEnabled");
             }
         }
-
-        [JsonProperty("lockout_end")]
-        public override DateTimeOffset? LockoutEnd
-        {
-            get { return base.LockoutEnd; }
-            set {
-                base.LockoutEnd = value;
-                OnPropertyChanged("LockoutEnd");
-            }
-        }
-
-        [JsonProperty("lockout_enabled")]
-        public override bool LockoutEnabled
-        {
-            get { return base.LockoutEnabled; }
-            set {
-                base.LockoutEnabled = value;
-                OnPropertyChanged("LockoutEnabled");
-            }
-        }        
-
-        [JsonProperty("access_failed_count")]
-        public override int AccessFailedCount
-        {
-            get { return base.AccessFailedCount; }
-            set {
-                base.AccessFailedCount = value;
-                OnPropertyChanged("AccessFailedCount");
-            }
-        }
-
+        
         [JsonProperty("is_activated")]
         public bool IsActive
         {
@@ -309,6 +209,8 @@ namespace Inkton.Nest.Model
             get { return _creditBalance; }
             set { SetProperty(ref _creditBalance, value); }
         }
+
+        
     }
 }
 

@@ -26,25 +26,25 @@ using Inkton.Nest.Cloud;
 namespace Inkton.Nest.Model
 {
     [Cloudname("permit")]
-    public class Permit : CloudObject
+    public class Permit<T> : CloudObject where T : User, new()
     {
-        private string _token;
-        private string _password;
-        private string _securityCode;
-        private User _user;
-        private List<Role> _roles;
+        private T _user;
+        private string _refreshToken;
+        private string _accessToken;
+        private string _activeToken;
 
         public Permit()
         {
-            _token = string.Empty;
-            _password = string.Empty;
-            _securityCode = string.Empty;
-            _user = new User();
+            _user = new T();
         }
 
         public bool IsValid
         {
-            get { return !string.IsNullOrEmpty(_token); }
+            get 
+            { 
+                return (_user != null &&
+                    !string.IsNullOrEmpty(_activeToken)); 
+            }
         }
 
         public override string CloudKey
@@ -52,45 +52,50 @@ namespace Inkton.Nest.Model
             get { return _user.Email; }
         }
 
-        [JsonProperty("token")]
-        public string Token
-        {
-            get { return _token; }
-            set { SetProperty(ref _token, value); }
-        }
-
-        [JsonProperty("password")]
-        public string Password
-        {
-            get { return _password; }
-            set { SetProperty(ref _password, value); }
-        }
-
-        [JsonProperty("security_code")]
-        public string SecurityCode
-        {
-            get { return _securityCode; }
-            set { SetProperty(ref _securityCode, value); }
-        }
-
-        [JsonProperty("owner")]
-        public User Owner
+        [JsonProperty("user")]
+        public T User
         {
             get { return _user; }
             set { SetProperty(ref _user, value); }
         }
 
-        [JsonProperty("roles")]
-        public List<Role> Roles
+        [JsonProperty("refresh_token")]
+        public string RefreshToken
         {
-            get { return _roles; }
-            set { SetProperty(ref _roles, value); }
+            get { return _refreshToken; }
+            set { SetProperty(ref _refreshToken, value); }
         }
 
-        public void Invalid()
+        [JsonProperty("access_token")]
+        public string AccessToken
         {
-            _token = string.Empty;
-            _password = string.Empty;
+            get { return _accessToken; }
+            set { SetProperty(ref _accessToken, value); }
+        }
+
+        [JsonIgnore]
+        public string ActiveToken
+        {
+            get { return _activeToken; }
+            set { SetProperty(ref _activeToken, value); }
+        }
+
+        public void UseRefreshToken()
+        {
+            _activeToken = _refreshToken;
+        }
+
+        public void UseAccessToken()
+        {
+            _activeToken = _accessToken;
+        }
+
+        public void Reset()
+        {
+            _user = null;
+            _refreshToken = string.Empty;
+            _accessToken = string.Empty;
+            _activeToken = string.Empty;
         }
     }
 }

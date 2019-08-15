@@ -28,7 +28,7 @@ namespace Inkton.Nest.Model
     [Cloudname("credit")]
     public class Credit : CloudObject
     {
-        private Int64 _id;
+        private int _id;
         private string _code;
         private string _type;
         private string _value;
@@ -40,7 +40,7 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("id")]
-        public Int64 Id
+        public int Id
         {
             get { return _id; }
             set { _id = value; }

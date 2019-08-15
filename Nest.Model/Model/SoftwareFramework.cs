@@ -28,14 +28,14 @@ namespace Inkton.Nest.Model
     [Cloudname("software_framework")]
     public class SoftwareFramework : CloudObject
     {
-        private Int64 _id;
+        private int _id;
         private string _tag;
         private string _name;
 
         [Cloudname("software_framework_version")]
         public class Version : CloudObject
         {
-            private Int64 _id;
+            private int _id;
             private string _tag;
             private string _name;
 
@@ -50,7 +50,7 @@ namespace Inkton.Nest.Model
             }
 
             [JsonProperty("id")]
-            public Int64 Id
+            public int Id
             {
                 get { return _id; }
                 set { _id = value; }
@@ -77,7 +77,7 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("id")]
-        public Int64 Id
+        public int Id
         {
             get { return _id; }
             set { _id = value; }

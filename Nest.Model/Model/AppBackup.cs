@@ -30,11 +30,11 @@ namespace Inkton.Nest.Model
 
     public class AppBackup : CloudObject
     {
-        private Int64 _id;
+        private int _id;
         private string _tag;
         private string _timeCreated;
         private string _description;
-        private Int64? _deploymentSize;
+        private int? _deploymentSize;
         private string _status;
 
         public override string CloudKey
@@ -43,7 +43,7 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("id")]
-        public Int64 Id
+        public int Id
         {
             get { return _id; }
             set { _id = value; }
@@ -80,7 +80,7 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("deployment_size")]
-        public Int64? DeploymentSize
+        public int? DeploymentSize
         {
             get { return _deploymentSize; }
             set

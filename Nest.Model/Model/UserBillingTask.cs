@@ -28,9 +28,9 @@ namespace Inkton.Nest.Model
     [Cloudname("user_billing_task")]
     public class UserBillingTask : CloudObject
     {
-        private Int64 _id;
+        private int _id;
         private string _time;
-        private Int64 _billingCycleId;
+        private int _billingCycleId;
         private string _activity;
         private double _amount;
         private double _balance;
@@ -53,7 +53,7 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("id")]
-        public Int64 Id
+        public int Id
         {
             get { return _id; }
             set { _id = value; }
@@ -74,7 +74,7 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("billing_cycle_id")]
-        public Int64 BillingCycleId
+        public int BillingCycleId
         {
             get { return _billingCycleId; }
             set { _billingCycleId = value; }

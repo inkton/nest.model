@@ -37,7 +37,7 @@ namespace Inkton.Nest.Cloud
     public delegate Task<ResultT> HttpRequest<PayloadT, ResultT>(
         PayloadT seed, IFlurlRequest flurlRequestl) where PayloadT : ICloudObject, new();
     public delegate Task<ResultT> CachedHttpRequest<PayloadT, ResultT>(PayloadT seed,
-        IDictionary<string, string> data, string subPath = null, bool doCache = true) where PayloadT : ICloudObject, new();
+        IDictionary<string, object> data, string subPath = null, bool doCache = true) where PayloadT : ICloudObject, new();
 
     public class BackendService<UserT> : IBackendService<UserT>
         where UserT : User, new()
@@ -77,7 +77,7 @@ namespace Inkton.Nest.Cloud
         public IBackendServiceNotify Notifier { get; set; }
 
         public async Task<ResultSingle<Permit<UserT>>> SignupAsync(
-            Dictionary<string, string> data = null)
+            Dictionary<string, object> data = null)
         {
             Notifier?.BeginQuery();
 
@@ -92,7 +92,7 @@ namespace Inkton.Nest.Cloud
         }
 
         public async Task<ResultSingle<Permit<UserT>>> SetupPermitAsync(
-            Dictionary<string, string> data = null)
+            Dictionary<string, object> data = null)
         {
             Notifier?.BeginQuery();
 
@@ -107,7 +107,7 @@ namespace Inkton.Nest.Cloud
         }
 
         public async Task<ResultSingle<Permit<UserT>>> RenewAccessAsync(
-            Dictionary<string, string> data = null)
+            Dictionary<string, object> data = null)
         {
             Notifier?.BeginQuery();
 
@@ -124,7 +124,7 @@ namespace Inkton.Nest.Cloud
         }
 
         public async Task<ResultSingle<Permit<UserT>>> RevokeAccessAsync(
-            Dictionary<string, string> data = null)
+            Dictionary<string, object> data = null)
         {
             return await TrySend<Permit<UserT>, ResultSingle<Permit<UserT>>, Permit<UserT>>(
                 new HttpRequest<Permit<UserT>, ResultSingle<Permit<UserT>>>(DeleteAsync),
@@ -192,7 +192,7 @@ namespace Inkton.Nest.Cloud
         }
 
         private IFlurlRequest CreateRequest<ObjectT>(ObjectT seed, bool keyRequest,
-            IDictionary<string, string> data = null, string subPath = null)
+            IDictionary<string, object> data = null, string subPath = null)
                 where ObjectT : ICloudObject, new()
         {
             string fullUrl = Endpoint;
@@ -268,7 +268,7 @@ namespace Inkton.Nest.Cloud
 
         private async Task<ResultT> TrySend<PayloadT, ResultT, ResultReturnT>(
             HttpRequest<PayloadT, ResultT> request,
-            PayloadT seed, bool keyRequest, IDictionary<string, string> data,
+            PayloadT seed, bool keyRequest, IDictionary<string, object> data,
             string subPath = null, bool doCache = true)
                 where PayloadT : ICloudObject, new()
                 where ResultT : Result<ResultReturnT>, new()
@@ -423,7 +423,7 @@ namespace Inkton.Nest.Cloud
         #endregion
 
         public async Task<ResultSingle<ObjectT>> CreateAsync<ObjectT>(
-            ObjectT seed, IDictionary<string, string> data = null,
+            ObjectT seed, IDictionary<string, object> data = null,
             string subPath = null, bool doCache = true)
             where ObjectT : ICloudObject, new()
         {
@@ -439,7 +439,7 @@ namespace Inkton.Nest.Cloud
         }
 
         public async Task<ResultSingle<ObjectT>> QueryAsync<ObjectT>(
-            ObjectT seed, IDictionary<string, string> data = null,
+            ObjectT seed, IDictionary<string, object> data = null,
             string subPath = null, bool doCache = true)
             where ObjectT : ICloudObject, new()
         {
@@ -465,7 +465,7 @@ namespace Inkton.Nest.Cloud
         }
 
         public async Task<ResultMultiple<ObjectT>> QueryAsyncListAsync<ObjectT>(
-            ObjectT seed, IDictionary<string, string> data = null,
+            ObjectT seed, IDictionary<string, object> data = null,
             string subPath = null, bool doCache = true)
             where ObjectT : ICloudObject, new()
         {
@@ -481,7 +481,7 @@ namespace Inkton.Nest.Cloud
         }
 
         public async Task<ResultSingle<ObjectT>> UpdateAsync<ObjectT>(
-            ObjectT seed, IDictionary<string, string> data = null,
+            ObjectT seed, IDictionary<string, object> data = null,
             string subPath = null, bool doCache = true)
             where ObjectT : ICloudObject, new()
         {
@@ -497,7 +497,7 @@ namespace Inkton.Nest.Cloud
         }
 
         public async Task<ResultSingle<ObjectT>> RemoveAsync<ObjectT>(
-            ObjectT seed, IDictionary<string, string> data = null,
+            ObjectT seed, IDictionary<string, object> data = null,
             string subPath = null, bool doCache = false)
             where ObjectT : ICloudObject, new()
         {

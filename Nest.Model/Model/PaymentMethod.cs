@@ -26,49 +26,80 @@ using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [Cloudname("token")]
+    [Cloudname("charge_card_token")]
     public class ChargeCardToken : CloudObject
     {
+        private int _id;
+        private int _paymentMethodId;
+        private string _brand;
+        private string _country;
+        private long _last4;
+        private long _expMonth;
+        private long _expYear;
+        private string _hash;
+
+        [JsonProperty("id")]
+        public int Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+
+        [JsonProperty("payment_method_id")]
+        public int PaymentMethodId
+        {
+            get { return _paymentMethodId; }
+            set { SetProperty(ref _paymentMethodId, value); }
+        }
+
         [JsonProperty("brand")]
         public string Brand
         {
-            get;
-            set;
+            get { return _brand; }
+            set { SetProperty(ref _brand, value); }
         }
         [JsonProperty("country")]
         public string Country
         {
-            get;
-            set;
+            get { return _country; }
+            set { SetProperty(ref _country, value); }
         }
 
         [JsonProperty("last4")]
-        public Int64 Last4
+        public long Last4
         {
-            get;
-            set;
+            get { return _last4; }
+            set { SetProperty(ref _last4, value); }
         }
 
         [JsonProperty("exp_month")]
-        public Int64 ExpMonth
+        public long ExpMonth
         {
-            get;
-            set;
+            get { return _expMonth; }
+            set { SetProperty(ref _expMonth, value); }
         }
 
         [JsonProperty("exp_year")]
-        public Int64 ExpYear
+        public long ExpYear
         {
-            get;
-            set;
+            get { return _expYear; }
+            set { SetProperty(ref _expYear, value); }
+        }
+
+        [JsonIgnore]
+        public string Hash
+        {
+            get { return _hash; }
+            set { SetProperty(ref _hash, value); }
         }
     }
 
     [Cloudname("payment_method")]
     public class PaymentMethod : CloudObject
     {
-        private Int64 _id;
+        private int _id;
         private string _type;
+        private int _userId;
         private string _tag;
         private string _name;
         private ChargeCardToken _proof;
@@ -85,7 +116,7 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("id")]
-        public Int64 Id
+        public int Id
         {
             get { return _id; }
             set { _id = value; }
@@ -95,11 +126,18 @@ namespace Inkton.Nest.Model
         public string Tag
         {
             get { return _tag; }
-            set { _tag = value; }
+            set { SetProperty(ref _tag, value); }
+        }
+
+        [JsonProperty("user_id")]
+        public int UserId
+        {
+            get { return _userId; }
+            set { SetProperty(ref _userId, value); }
         }
 
         [JsonProperty("type")]
-        public string type
+        public string Type
         {
             get { return _type; }
             set { _type = value; }

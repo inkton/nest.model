@@ -29,9 +29,9 @@ namespace Inkton.Nest.Model
     [Cloudname("app_audit")]
     public class AppAudit : CloudObject
     {
-        private Int64 _id;
+        private int _id;
         private string _tag;
-        private Int64 _epoch;
+        private int _epoch;
         private string _activity;
         private string _status;
         private string _user;
@@ -47,7 +47,7 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("id")]
-        public Int64 Id
+        public int Id
         {
             get { return _id; }
             set { _id = value; }
@@ -89,7 +89,7 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("epoch")]
-        public Int64 Epoch
+        public int Epoch
         {
             get { return _epoch; }
             set

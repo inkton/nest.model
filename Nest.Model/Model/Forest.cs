@@ -28,7 +28,7 @@ namespace Inkton.Nest.Model
     [Cloudname("forest")]
     public class Forest : CloudObject
     {
-        private Int64 _id;
+        private int _id;
         private string _tag;
         private string _name;
         private string _region;
@@ -40,7 +40,7 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("id")]
-        public Int64 Id
+        public int Id
         {
             get { return _id; }
             set { _id = value; }

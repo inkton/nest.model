@@ -28,13 +28,13 @@ namespace Inkton.Nest.Model
     [Cloudname("nest")]
     public class Nest : CloudObject
     {
-        private Int64 _id;
-        private Int64 _appId;
+        private int _id;
+        private int _appId;
         private string _tag;
         private string _name;
-        private Int64? _platformId;
+        private int? _platformId;
         private string _status;
-        private Int64 _scale;
+        private int _scale;
         private string _scaleSize;
         private NestPlatform _platform;
 
@@ -44,14 +44,14 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("id")]
-        public Int64 Id
+        public int Id
         {
             get { return _id; }
             set { _id = value; }
         }
 
         [JsonProperty("app_id")]
-        public Int64 AppId
+        public int AppId
         {
             get { return _appId; }
             set { SetProperty(ref _appId, value); }
@@ -94,7 +94,7 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("platform_id")]
-        public Int64? PlatformId
+        public int? PlatformId
         {
             get { return _platformId; }
             set
@@ -114,7 +114,7 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("scale")]
-        public Int64 Scale
+        public int Scale
         {
             get { return _scale; }
             set

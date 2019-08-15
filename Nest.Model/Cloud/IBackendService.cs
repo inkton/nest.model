@@ -36,32 +36,32 @@ namespace Inkton.Nest.Cloud
         Permit<UserT> Permit { get; set; }
 
         Task<ResultSingle<Permit<UserT>>> SignupAsync(
-            Dictionary<string, string> data = null);
+            Dictionary<string, object> data = null);
         Task<ResultSingle<Permit<UserT>>> SetupPermitAsync(
-            Dictionary<string, string> data = null);
+            Dictionary<string, object> data = null);
         Task<ResultSingle<Permit<UserT>>> RenewAccessAsync(
-            Dictionary<string, string> data = null);
+            Dictionary<string, object> data = null);
         Task<ResultSingle<Permit<UserT>>> RevokeAccessAsync(
-            Dictionary<string, string> data = null);
+            Dictionary<string, object> data = null);
 
         Task<ResultSingle<ObjectT>> CreateAsync<ObjectT>(
-            ObjectT seed, IDictionary<string, string> data = null,
+            ObjectT seed, IDictionary<string, object> data = null,
             string subPath = null, bool doCache = true)
             where ObjectT : ICloudObject, new();
         Task<ResultSingle<ObjectT>> QueryAsync<ObjectT>(
-            ObjectT seed, IDictionary<string, string> data = null,
+            ObjectT seed, IDictionary<string, object> data = null,
             string subPath = null, bool doCache = true)
             where ObjectT : ICloudObject, new();
         Task<ResultMultiple<ObjectT>> QueryAsyncListAsync<ObjectT>(
-            ObjectT seed, IDictionary<string, string> data = null,
+            ObjectT seed, IDictionary<string, object> data = null,
             string subPath = null, bool doCache = true)
             where ObjectT : ICloudObject, new();
         Task<ResultSingle<ObjectT>> UpdateAsync<ObjectT>(
-            ObjectT seed, IDictionary<string, string> data = null,
+            ObjectT seed, IDictionary<string, object> data = null,
             string subPath = null, bool doCache = true)
             where ObjectT : ICloudObject, new();
         Task<ResultSingle<ObjectT>> RemoveAsync<ObjectT>(
-            ObjectT seed, IDictionary<string, string> data = null,
+            ObjectT seed, IDictionary<string, object> data = null,
             string subPath = null, bool doCache = false)
             where ObjectT : ICloudObject, new();
     }

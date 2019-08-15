@@ -28,10 +28,10 @@ namespace Inkton.Nest.Model
     [Cloudname("permission")]
     public class Permission : CloudObject
     {
-        private Int64 _id;
-        private Int64 _appId;
-        private Int64? _userId;
-        private Int64 _contactId;
+        private int _id;
+        private int _appId;
+        private int? _userId;
+        private int _contactId;
         private string _appPermissionTag;
 
         public override string CloudKey
@@ -40,28 +40,28 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("id")]
-        public Int64 Id
+        public int Id
         {
             get { return _id; }
             set { _id = value; }
         }
 
         [JsonProperty("app_id")]
-        public Int64 AppId
+        public int AppId
         {
             get { return _appId; }
             set { SetProperty(ref _appId, value); }
         }
 
         [JsonProperty("contact_id")]
-        public Int64 ContactId
+        public int ContactId
         {
             get { return _contactId; }
             set { SetProperty(ref _contactId, value); }
         }
 
         [JsonProperty("user_id", NullValueHandling = NullValueHandling.Ignore)]
-        public Int64? UserId
+        public int? UserId
         {
             get { return _userId; }
             set { SetProperty(ref _userId, value); }

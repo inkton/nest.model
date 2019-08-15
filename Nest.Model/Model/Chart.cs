@@ -35,14 +35,14 @@ namespace Inkton.Nest.Model
         private string _family;
         private string _context;
         private string _title;
-        private Int64 _priority;
+        private int _priority;
         private bool _enabled;
         private string _units;
         private string _chartType;
-        private Int64 _duration;
-        private Int64 _firstEntry;
-        private Int64 _lastEntry;
-        private Int64 _updateEvery;
+        private int _duration;
+        private int _firstEntry;
+        private int _lastEntry;
+        private int _updateEvery;
         private double _min, _max;
         private Points _result;
 
@@ -129,7 +129,7 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("priority", NullValueHandling = NullValueHandling.Ignore)]
-        public Int64 Priority
+        public int Priority
         {
             get { return _priority; }
             set { _priority = value; }
@@ -157,28 +157,28 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("duration", NullValueHandling = NullValueHandling.Ignore)]
-        public Int64 Duration
+        public int Duration
         {
             get { return _duration; }
             set { _duration = value; }
         }
 
         [JsonProperty("first_entry")]
-        public Int64 FirstEntry
+        public int FirstEntry
         {
             get { return _firstEntry; }
             set { _firstEntry = value; }
         }
 
         [JsonProperty("last_entry")]
-        public Int64 LastEntry
+        public int LastEntry
         {
             get { return _lastEntry; }
             set { _lastEntry = value; }
         }
 
         [JsonProperty("update_every")]
-        public Int64 UpdateEvery
+        public int UpdateEvery
         {
             get { return _updateEvery; }
             set { _updateEvery = value; }

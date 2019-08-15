@@ -28,11 +28,11 @@ namespace Inkton.Nest.Model
     [Cloudname("devkit")]
     public class Devkit : CloudObject
     {
-        private Int64 _id;
+        private int _id;
         private string _script;
 
         [JsonProperty("id")]
-        public Int64 Id
+        public int Id
         {
             get { return _id; }
             set { _id = value; }

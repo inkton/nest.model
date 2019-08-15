@@ -209,8 +209,6 @@ namespace Inkton.Nest.Model
             get { return _creditBalance; }
             set { SetProperty(ref _creditBalance, value); }
         }
-
-        
     }
 }
 

@@ -29,9 +29,9 @@ namespace Inkton.Nest.Model
     [Cloudname("contact")]
     public class Contact : CloudObject
     {
-        private Int64 _id;
-        private Int64 _appId;        
-        private Int64? _userId;
+        private int _id;
+        private int _appId;        
+        private int? _userId;
         private string _email;
         private string _status;
         private bool _notifyUpdates;
@@ -56,21 +56,21 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("id")]
-        public Int64 Id
+        public int Id
         {
             get { return _id; }
             set { _id = value; }
         }
 
         [JsonProperty("app_id")]
-        public Int64 AppId
+        public int AppId
         {
             get { return _appId; }
             set { SetProperty(ref _appId, value); }
         }
 
         [JsonProperty("user_id", NullValueHandling = NullValueHandling.Ignore)]
-        public Int64? UserId
+        public int? UserId
         {
             get { return _userId; }
             set { SetProperty(ref _userId, value); }

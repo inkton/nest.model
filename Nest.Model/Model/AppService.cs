@@ -30,13 +30,13 @@ namespace Inkton.Nest.Model
     [Cloudname("app_service")]
     public class AppService : CloudObject
     {
-        private Int64 _id;
+        private int _id;
         private string _tag;
         private string _name;
         private string _type;
         private string _rules;
         private string _featuresAll;
-        private Int64? _port;
+        private int? _port;
         private Deployment _deployment;
         private ObservableCollection<AppServiceTier> _tiers;
 
@@ -65,7 +65,7 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("id")]
-        public Int64 Id
+        public int Id
         {
             get { return _id; }
             set { _id = value; }
@@ -107,7 +107,7 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("port")]
-        public Int64? Port
+        public int? Port
         {
             get { return _port; }
             set { SetProperty(ref _port, value); }

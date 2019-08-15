@@ -30,17 +30,17 @@ namespace Inkton.Nest.Model
     [Cloudname("app")]
     public class App : CloudObject
     {
-        private Int64 _id;
+        private int _id;
         private string _tag;
         private string _name;
         private string _type;
         private string _status;
         private string _ipAddress;
-        private Int64 _userId;
-        private Int64? _treeId;
-        private Int64? _primaryDomainId;
+        private int _userId;
+        private int? _treeId;
+        private int? _primaryDomainId;
         private string _unifiedPassword, _networkPassword, _servicesPassword;
-        private Int64? _serviceTierId;
+        private int? _serviceTierId;
         private int _backupHour;
 
         private Deployment _deployment;
@@ -89,7 +89,7 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("id")]
-        public Int64 Id
+        public int Id
         {
             get { return _id; }
             set { _id = value; }
@@ -228,7 +228,7 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("primary_domain_id")]
-        public Int64? PrimaryDomainId
+        public int? PrimaryDomainId
         {
             get { return _primaryDomainId; }
             set { SetProperty(ref _primaryDomainId, value); }
@@ -268,21 +268,21 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("user_id")]
-        public Int64 UserId
+        public int UserId
         {
             get { return _userId; }
             set { _userId = value; }
         }
 
         [JsonProperty("tree_id", NullValueHandling = NullValueHandling.Ignore)]
-        public Int64? TreeId
+        public int? TreeId
         {
             get { return _treeId; }
             set { _treeId = value; }
         }
 
         [JsonProperty("app_service_tier_id", NullValueHandling = NullValueHandling.Ignore)]
-        public Int64? ServiceTierId
+        public int? ServiceTierId
         {
             get { return _serviceTierId; }
             set { SetProperty(ref _serviceTierId, value); }

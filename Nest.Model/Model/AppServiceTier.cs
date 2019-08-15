@@ -29,8 +29,8 @@ namespace Inkton.Nest.Model
     [Cloudname("app_service_tier")]
     public class AppServiceTier : CloudObject
     {
-        private Int64 _id;
-        private Int64 _appServiceId;
+        private int _id;
+        private int _appServiceId;
         private string _tag;
         private string _name;
         private string _type;
@@ -44,14 +44,14 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("id")]
-        public Int64 Id
+        public int Id
         {
             get { return _id; }
             set { _id = value; }
         }
 
         [JsonProperty("app_service_id")]
-        public Int64 AppServiceId
+        public int AppServiceId
         {
             get { return _appServiceId; }
             set { _appServiceId = value; }

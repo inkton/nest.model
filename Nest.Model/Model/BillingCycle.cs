@@ -28,7 +28,7 @@ namespace Inkton.Nest.Model
     [Cloudname("billing_cycle")]
     public class BillingCycle : CloudObject
     {
-        private Int64 _id;
+        private int _id;
         private string _begin;
         private string _end;
 
@@ -46,7 +46,7 @@ namespace Inkton.Nest.Model
         }
 
         [JsonProperty("id")]
-        public Int64 Id
+        public int Id
         {
             get { return _id; }
             set { _id = value; }

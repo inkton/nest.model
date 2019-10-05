@@ -31,9 +31,14 @@ namespace Inkton.Nest.Cloud
     {
         int Version { get; set; }
         string DeviceSignature { get; set; }
-        string Endpoint { get; set; }
-        BasicAuth BasicAuth { get; set; }
+        string Address { get; set; }
+        string ApiEndpoint { get; set; }
         Permit<UserT> Permit { get; set; }
+        bool AutoTokenRenew { get; set; }
+        int RetryCount { get; set; }
+        int RetryBaseIntervalInSecs { get; set; }
+        IBackendServiceNotify Notifier { get; set; }
+        BasicAuth BasicAuth { get; set; }
 
         Task<ResultSingle<Permit<UserT>>> SignupAsync(
             Dictionary<string, object> data = null);

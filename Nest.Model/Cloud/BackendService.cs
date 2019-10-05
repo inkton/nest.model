@@ -21,6 +21,7 @@
 */
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -42,29 +43,13 @@ namespace Inkton.Nest.Cloud
     public class BackendService<UserT> : IBackendService<UserT>
         where UserT : User, new()
     {
-        private BasicAuth _basicAuth;
-        private ObjectStore _cache;
-
-        public BackendService()
-        {
-            _cache = new ObjectStore(System.IO.Path.GetTempPath() +
-                 Guid.NewGuid() + "-cache");
-            _cache.Clear();
-            DeviceSignature = "-nest.yt-";
-            Endpoint = "https://api.nest.yt/";
-        }
-
         public int Version { get; set; } = 1;
 
-        public string DeviceSignature { get; set; }
+        public string DeviceSignature { get; set; } = "-nest.yt-";
 
-        public string Endpoint { get; set; }
+        public string Address { get; set; }
 
-        public BasicAuth BasicAuth
-        {
-            get { return _basicAuth; }
-            set { _basicAuth = value; }
-        }
+        public string ApiEndpoint { get; set; } = "api/";
 
         public Permit<UserT> Permit { get; set; } = new Permit<UserT>();
 
@@ -75,6 +60,11 @@ namespace Inkton.Nest.Cloud
         public int RetryBaseIntervalInSecs { get; set; } = 2;
 
         public IBackendServiceNotify Notifier { get; set; }
+
+        public BasicAuth BasicAuth { get; set; }
+
+        private ObjectStore _cache = new ObjectStore(Path.GetTempPath() +
+                 Guid.NewGuid() + "-cache");
 
         public async Task<ResultSingle<Permit<UserT>>> SignupAsync(
             Dictionary<string, object> data = null)
@@ -316,7 +306,7 @@ namespace Inkton.Nest.Cloud
             IDictionary<string, object> data = null, string subPath = null)
                 where ObjectT : ICloudObject, new()
         {
-            string fullUrl = Endpoint;
+            string fullUrl = Address + ApiEndpoint;
 
             if (keyRequest)
                 fullUrl += seed.CollectionKey;
@@ -335,8 +325,8 @@ namespace Inkton.Nest.Cloud
             if (Permit.IsValid)
                 request.WithOAuthBearerToken(Permit.ActiveToken);
 
-            if (_basicAuth.Enabled)
-                request.WithBasicAuth(_basicAuth.Username, _basicAuth.Password);
+            if (BasicAuth.Enabled)
+                request.WithBasicAuth(BasicAuth.Username, BasicAuth.Password);
 
             return request;
         }

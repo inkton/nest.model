@@ -20,80 +20,12 @@
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 using Inkton.Nest.Cloud;
 
 namespace Inkton.Nest.Model
 {
-    [Cloudname("charge_card_token")]
-    public class ChargeCardToken : CloudObject
-    {
-        private int _id;
-        private int _paymentMethodId;
-        private string _brand;
-        private string _country;
-        private long _last4;
-        private long _expMonth;
-        private long _expYear;
-        private string _hash;
-
-        [JsonProperty("id")]
-        public int Id
-        {
-            get { return _id; }
-            set { _id = value; }
-        }
-
-        [JsonProperty("payment_method_id")]
-        public int PaymentMethodId
-        {
-            get { return _paymentMethodId; }
-            set { SetProperty(ref _paymentMethodId, value); }
-        }
-
-        [JsonProperty("brand")]
-        public string Brand
-        {
-            get { return _brand; }
-            set { SetProperty(ref _brand, value); }
-        }
-        [JsonProperty("country")]
-        public string Country
-        {
-            get { return _country; }
-            set { SetProperty(ref _country, value); }
-        }
-
-        [JsonProperty("last4")]
-        public long Last4
-        {
-            get { return _last4; }
-            set { SetProperty(ref _last4, value); }
-        }
-
-        [JsonProperty("exp_month")]
-        public long ExpMonth
-        {
-            get { return _expMonth; }
-            set { SetProperty(ref _expMonth, value); }
-        }
-
-        [JsonProperty("exp_year")]
-        public long ExpYear
-        {
-            get { return _expYear; }
-            set { SetProperty(ref _expYear, value); }
-        }
-
-        [JsonIgnore]
-        public string Hash
-        {
-            get { return _hash; }
-            set { SetProperty(ref _hash, value); }
-        }
-    }
-
     [Cloudname("payment_method")]
     public class PaymentMethod : CloudObject
     {
@@ -101,14 +33,16 @@ namespace Inkton.Nest.Model
         private string _type;
         private int _userId;
         private string _tag;
-        private string _name;
-        private ChargeCardToken _proof;
 
-        public PaymentMethod() 
-        {
-            _type = "cc";
-            _tag = "stripe_cc";
-        }
+        private string _brand;
+        private string _country;
+        private string _number;
+        private string _cvc;
+
+        private int _expMonth;
+        private int _expYear;
+        private string _last4;
+        private string _token;
 
         public override string CloudKey
         {
@@ -143,25 +77,93 @@ namespace Inkton.Nest.Model
             set { _type = value; }
         }
 
-        [JsonProperty("name")]
-        public string Name
+        [JsonProperty("brand")]
+        public string Brand
         {
-            get { return _name; }
-            set { SetProperty(ref _name, value); }
+            get { return _brand; }
+            set { SetProperty(ref _brand, value); }
+        }
+
+        [JsonProperty("country")]
+        public string Country
+        {
+            get { return _country; }
+            set { SetProperty(ref _country, value); }
+        }
+
+        [NotMapped]
+        [JsonProperty("number")]
+        public string Number
+        {
+            get { return _number; }
+            set { SetProperty(ref _number, value); }
+        }
+
+        [NotMapped]
+        [JsonProperty("cvc")]
+        public string Cvc
+        {
+            get { return _cvc; }
+            set { SetProperty(ref _cvc, value); }
+        }
+
+        [JsonProperty("exp_month")]
+        public int ExpMonth
+        {
+            get { return _expMonth; }
+            set { SetProperty(ref _expMonth, value); }
+        }
+
+        [JsonProperty("exp_year")]
+        public int ExpYear
+        {
+            get { return _expYear; }
+            set { SetProperty(ref _expYear, value); }
+        }
+
+        [JsonProperty("last4")]
+        public string Last4
+        {
+            get { return _last4; }
+            set { SetProperty(ref _last4, value); }
         }
 
         [JsonProperty("token")]
-        public ChargeCardToken Proof
+        public string Token
         {
-            get { return _proof; }
-            set { SetProperty(ref _proof, value); }
+            get { return _token; }
+            set {
+                SetProperty(ref _token, value);
+                OnPropertyChanged("IsActive");
+            }
         }
 
         public bool IsActive
         {
             get
             {
-                return (_proof != null && _proof.Last4 > 0);
+                return (_token != null &&
+                    _token.Length > 0);
+                }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return ToString();
+            }
+        }
+
+        public override string ToString()
+        {
+            if (IsActive)
+            {
+                return $"{_brand}\nEnds in {_last4}\nExpiry {_expMonth}/{_expYear}";
+            }
+            else
+            {
+                return "Not Active";
             }
         }
     }
